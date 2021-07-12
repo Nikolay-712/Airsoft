@@ -7,6 +7,8 @@
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Data.Repositories;
+    using AirsoftApplication.Services.Data.Events;
+    using AirsoftApplication.Services.Data.Images;
     using AirsoftApplication.Services.Mapping;
     using AirsoftApplication.Services.Messaging;
     using AirsoftApplication.Web.ViewModels;
@@ -62,6 +64,8 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEventService, EventService>();
+            services.AddTransient<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

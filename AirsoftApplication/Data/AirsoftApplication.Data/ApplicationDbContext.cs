@@ -7,6 +7,8 @@
     using System.Threading.Tasks;
 
     using AirsoftApplication.Data.Common.Models;
+    using AirsoftApplication.Data.Models.Events;
+    using AirsoftApplication.Data.Models.Images;
     using AirsoftApplication.Data.Models.Users;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -23,6 +25,12 @@
             : base(options)
         {
         }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Event> Events { get; set; }
+
+        public DbSet<Battlefield> Fields { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
