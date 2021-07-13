@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\Data\AirsoftApplication.Data.Models\AirsoftApplication.Data.Models.csproj" />
     <ProjectReference Include="..\..\Web\AirsoftApplication.Web.ViewModels\AirsoftApplication.Web.ViewModels.csproj" />
     <ProjectReference Include="..\AirsoftApplication.Services.Mapping\AirsoftApplication.Services.Mapping.csproj" />
+    <ProjectReference Include="..\AirsoftApplication.Services.Messaging\AirsoftApplication.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

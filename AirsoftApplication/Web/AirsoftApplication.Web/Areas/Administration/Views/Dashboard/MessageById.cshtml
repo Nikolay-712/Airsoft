@@ -1,0 +1,31 @@
+﻿@model AirsoftApplication.Web.ViewModels.Administration.Contacts.MessageViewModel
+
+
+<p>@Model.Email</p>
+<p>@Model.Username</p>
+<p>@Model.Content</p>
+
+
+
+
+<form asp-area="Administration" asp-controller="Messages" asp-action="ReturnAnswer" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MessageSubject" class="control-label">Subject</label>
+        <input asp-for="MessageSubject" class="form-control" />
+        <span asp-validation-for="MessageSubject" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MessageContent" class="control-label">Message</label>
+        <textarea rows="5" asp-for="MessageContent" class="form-control"></textarea>
+        <span asp-validation-for="MessageContent" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Send" class="btn btn-primary" />
+    </div>
+</form>

@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using AirsoftApplication.Data.Common.Models;
+    using AirsoftApplication.Data.Models.Contacts;
     using AirsoftApplication.Data.Models.Events;
     using AirsoftApplication.Data.Models.Guns;
     using AirsoftApplication.Data.Models.Images;
@@ -34,6 +35,8 @@
         public DbSet<Battlefield> Fields { get; set; }
 
         public DbSet<Gun> Guns { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

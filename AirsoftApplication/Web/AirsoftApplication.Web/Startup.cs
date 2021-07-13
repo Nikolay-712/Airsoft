@@ -7,6 +7,7 @@
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Data.Repositories;
+    using AirsoftApplication.Services.Data.Contacts;
     using AirsoftApplication.Services.Data.Events;
     using AirsoftApplication.Services.Data.Guns;
     using AirsoftApplication.Services.Data.Images;
@@ -68,6 +69,7 @@
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IGunService, GunService>();
+            services.AddTransient<IContactService, ContactService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
