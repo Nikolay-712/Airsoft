@@ -8,6 +8,7 @@
 
     using AirsoftApplication.Data.Common.Models;
     using AirsoftApplication.Data.Models.Events;
+    using AirsoftApplication.Data.Models.Guns;
     using AirsoftApplication.Data.Models.Images;
     using AirsoftApplication.Data.Models.Users;
 
@@ -31,6 +32,8 @@
         public DbSet<Event> Events { get; set; }
 
         public DbSet<Battlefield> Fields { get; set; }
+
+        public DbSet<Gun> Guns { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
