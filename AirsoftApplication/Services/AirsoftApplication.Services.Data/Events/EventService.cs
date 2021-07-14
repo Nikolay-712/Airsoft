@@ -79,6 +79,7 @@
                 .OrderByDescending(x => x.Date)
                 .Select(x => new EventViewModel
                 {
+                    Id = x.Id,
                     Image = this.imageService.GetAllImages(x.Id).FirstOrDefault(),
                     Date = x.Date.ToString("dd.MM.yyyy"),
                     Time = x.Time.ToString("HH.mm"),

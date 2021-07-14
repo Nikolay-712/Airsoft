@@ -4,14 +4,16 @@ using AirsoftApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirsoftApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210714105053_AddStatisticModel")]
+    partial class AddStatisticModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,7 +276,7 @@ namespace AirsoftApplication.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Statistics");
+                    b.ToTable("Statistic");
                 });
 
             modelBuilder.Entity("AirsoftApplication.Data.Models.Statistics.StatisticInfo", b =>
@@ -313,7 +315,7 @@ namespace AirsoftApplication.Data.Migrations
 
                     b.HasIndex("StatisticId");
 
-                    b.ToTable("StatisticInfos");
+                    b.ToTable("StatisticInfo");
                 });
 
             modelBuilder.Entity("AirsoftApplication.Data.Models.Users.ApplicationRole", b =>

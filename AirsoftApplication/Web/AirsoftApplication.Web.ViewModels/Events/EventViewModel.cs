@@ -4,6 +4,8 @@
 
     public class EventViewModel
     {
+        public string Id { get; set; }
+
         public ImageViewModel Image { get; set; }
 
         public string Date { get; set; }

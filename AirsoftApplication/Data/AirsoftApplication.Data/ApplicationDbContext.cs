@@ -11,6 +11,7 @@
     using AirsoftApplication.Data.Models.Events;
     using AirsoftApplication.Data.Models.Guns;
     using AirsoftApplication.Data.Models.Images;
+    using AirsoftApplication.Data.Models.Statistics;
     using AirsoftApplication.Data.Models.Users;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -37,6 +38,10 @@
         public DbSet<Gun> Guns { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Statistic> Statistics { get; set; }
+
+        public DbSet<StatisticInfo> StatisticInfos { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
