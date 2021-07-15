@@ -1,3 +1,41 @@
-﻿<p> Player profile</p>
+﻿@model AirsoftApplication.Web.ViewModels.Users.UserViewModel
 
-<a class="btn btn-primary" asp-action="AddGun">Add guns</a>
+<h4>Player Profile</h4>
+<hr />
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="row">
+    <div class="col-xs-12 col-md-4 col-lg-3">
+        <div class="userProfileInfo">
+            <div class="image text-center">
+                @if (Model.Images.Count() < 1)
+                {
+                    <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlfG41UNmKPmirNjb-8UlFZPv2PQ3Qwj0NIySc-XIl6CRFU8p0mOx51bRjXzvxZtqe5oQ&usqp=CAU" alt="#" class="img-responsive">
+                    <a asp-action="UploadProfileImage" title="" class="editImage">
+                        <i class="fa fa-camera"></i>
+                    </a>
+
+                }
+                else
+                {
+                    <img src="@Model.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" alt="#" class="img-responsive">
+                    <a asp-action="UploadProfileImage" title="" class="editImage">
+                        <i class="fa fa-camera"></i>
+                    </a>
+                }
+
+            </div>
+            <div class="">
+                <div class="name"><strong>@Model.PlayerName</strong></div>
+                <div class="info">
+                    <span><i class="fa fa-fw fa-clock-o"></i> <a title="">Graoforce Team</a></span>
+
+                    <span><i class="fa fa-fw fa-usd"></i> Best street No. 554/7A<br>949 01 Florida<br>United States</span>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-primary" asp-action="AddGun">Add guns</a>
+    </div>
+
+</div>
+

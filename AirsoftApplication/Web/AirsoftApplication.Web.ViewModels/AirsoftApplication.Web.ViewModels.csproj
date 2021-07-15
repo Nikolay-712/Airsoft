@@ -24,8 +24,4 @@
     <ProjectReference Include="..\..\Services\AirsoftApplication.Services.Mapping\AirsoftApplication.Services.Mapping.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Administration\Dashboard\" />
-  </ItemGroup>
-
 </Project>

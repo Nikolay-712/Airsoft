@@ -5,6 +5,7 @@
 
     using AirsoftApplication.Data.Common.Models;
     using AirsoftApplication.Data.Models.Guns;
+    using AirsoftApplication.Data.Models.Images;
     using AirsoftApplication.Data.Models.Statistics;
     using Microsoft.AspNetCore.Identity;
 
@@ -21,6 +22,8 @@
         }
 
         public string PlayerName { get; set; }
+
+        public Image ProfileImage { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

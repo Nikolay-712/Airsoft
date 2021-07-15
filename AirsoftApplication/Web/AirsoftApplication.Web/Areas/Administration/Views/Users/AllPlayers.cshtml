@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Users.UserViewModel>
+
+<div class="col-md-12">
+    <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="sort" data-sort="playerName">Name</th>
+                    <th scope="col" class="sort" data-sort="createdOn">Created On</th>
+                    <th scope="col" class="sort" data-sort="userRoles">Team Position</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            @foreach (var user in Model.OrderByDescending(x => x.AllUserRoles))
+            {
+                <tbody class="list">
+                    <tr>
+                        <th scope="row">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <span class="playerName mb-0 text-sm">@user.PlayerName</span>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th scope="row">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <span class="createdOn mb-0 text-sm">@user.CreatedOn</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="row">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <span class="userRoles mb-0 text-sm">@user.AllUserRoles</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <a class="nav-link active" aria-current="page" asp-action="SetPlayerRole" asp-route-userId="@user.UserId">Set Role</a>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+</div>

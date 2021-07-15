@@ -72,6 +72,7 @@
                 .Select(x => new ImageViewModel
                 {
                     ImageUrl = x.ImageUrl,
+                    CreatedOn = x.CreatedOn,
                 }).ToList();
 
             return images;

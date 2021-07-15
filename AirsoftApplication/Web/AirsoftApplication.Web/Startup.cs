@@ -11,6 +11,7 @@
     using AirsoftApplication.Services.Data.Events;
     using AirsoftApplication.Services.Data.Guns;
     using AirsoftApplication.Services.Data.Images;
+    using AirsoftApplication.Services.Data.Roles;
     using AirsoftApplication.Services.Data.Statistics;
     using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Services.Mapping;
@@ -74,6 +75,7 @@
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<IStatisticService, StatisticService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
