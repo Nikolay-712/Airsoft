@@ -1,1 +1,49 @@
-﻿
+﻿<h4>
+    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Calendar
+</h4>
+
+
+@{
+    ViewData["Title"] = "Calendar";
+}
+<br />
+
+<div class="col mr-3 mb-2">
+    <a class="btn btn-primary" asp-area="" asp-controller="" asp-action="">
+        <i class="fas fa-bomb"></i> All events
+    </a>
+
+    <a class="btn btn-primary" asp-controller="Contacts" asp-action="Index">
+        <i class="far fa-envelope"></i> Contacts
+    </a>
+
+    <a class="btn btn-primary" asp-controller="Contacts" asp-action="Index">
+        <i class="fas fa-check-double"></i> Airsoft rules
+    </a>
+
+</div>
+
+<div class="row justify-content-center">
+    @for (int i = 0; i < 5; i++)
+    {
+        <div class="col-md-3 border p-3 ml-1 mb-1 text-center">
+            <p>
+                <span style="font-size: 10em; color: cornflowerblue;">
+                    <i class="fas fa-calendar-check"></i>
+                </span>
+                <strong style="font-size: 18px">15.08.2021</strong>
+            </p>
+            <p>
+                <span style="color:cadetblue; font-size: 20px">expect details</span>
+
+                <div>
+                    <span style="font-size: 15px">Team : <strong style="color:green; font-size: 17px">Graoforces</strong> </span>
+                </div>
+            </p>
+        </div>
+    }
+</div>
+
+
+
+

@@ -1,20 +1,21 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Guns.InputGunViewModel
 @using AirsoftApplication.Data.Models.Guns
 
+<h4>
+    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Players" asp-action="Index" class="link-primary">Profile</a>/Guns
+</h4>
 @{
     ViewData["Title"] = "AddGun";
 }
 
-<h1>AddGun</h1>
+<br />
 
-<h4>InputGunViewModel</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6 border p-3">
         <form asp-action="AddGun">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="GunType" class="control-label"></label>
+                <label asp-for="GunType" class="control-label">Gun Type</label>
                 <select asp-for="GunType" class="form-control">
                     <option value=""></option>
                     <option value="@GunType.Carabine">Carabine</option>
@@ -38,7 +39,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to profile</a>
 </div>
 
 @section Scripts {

@@ -18,5 +18,10 @@
 
             return this.View(gameEvent);
         }
+
+        public IActionResult NoEvents()
+        {
+            return this.View();
+        }
     }
 }

@@ -1,41 +1,50 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Users.UserViewModel
 
-<h4>Player Profile</h4>
-<hr />
-
+<h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Profile</h4>
+@{
+    ViewData["Title"] = "Player profile";
+}
+<br />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="row">
-    <div class="col-xs-12 col-md-4 col-lg-3">
-        <div class="userProfileInfo">
-            <div class="image text-center">
-                @if (Model.Images.Count() < 1)
-                {
-                    <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlfG41UNmKPmirNjb-8UlFZPv2PQ3Qwj0NIySc-XIl6CRFU8p0mOx51bRjXzvxZtqe5oQ&usqp=CAU" alt="#" class="img-responsive">
-                    <a asp-action="UploadProfileImage" title="" class="editImage">
-                        <i class="fa fa-camera"></i>
-                    </a>
+<div class="border p-4 ">
+    <div class="row">
+        <div class="col-xs-3 col-md-4 col-lg-3">
+            <div class="userProfileInfo">
+                <div class="image text-center">
+                    @if (Model.Images.Count() < 1)
+                    {
+                        <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="#" class="img-fluid">
+                        <a asp-action="UploadProfileImage" title="" class="editImage">
+                            <i class="fa fa-camera"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <img src="@Model.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" alt="#" class="img-fluid">
+                        <a asp-action="UploadProfileImage" title="" class="editImage">
+                            <i class="fa fa-camera"></i>
+                        </a>
 
-                }
-                else
-                {
-                    <img src="@Model.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" alt="#" class="img-responsive">
-                    <a asp-action="UploadProfileImage" title="" class="editImage">
-                        <i class="fa fa-camera"></i>
-                    </a>
-                }
+                    }
 
-            </div>
-            <div class="">
-                <div class="name"><strong>@Model.PlayerName</strong></div>
-                <div class="info">
-                    <span><i class="fa fa-fw fa-clock-o"></i> <a title="">Graoforce Team</a></span>
+                </div>
+                <br />
+                <div class="border p-3 col-sm mb-3">
+                    <div class="">
+                        <div class="name"><strong>@Model.PlayerName - Graoforce Team</strong></div>
+                        <div class="info">
 
-                    <span><i class="fa fa-fw fa-usd"></i> Best street No. 554/7A<br>949 01 Florida<br>United States</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary" asp-action="AddGun">Add guns</a>
+
+        <div class="col-md border p-3 col-sm mb-3">
+            <a class="btn btn-primary" asp-action="AddGun">Add guns</a>
+        </div>
+
+
     </div>
 
 </div>
-

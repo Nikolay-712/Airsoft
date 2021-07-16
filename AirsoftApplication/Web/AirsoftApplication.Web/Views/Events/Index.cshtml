@@ -1,20 +1,26 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Events.EventViewModel
 
-<h4>Предстояща игра</h4>
-<hr />
+<h4>
+    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Event
+</h4>
+@{
+    ViewData["Title"] = "UpcomingEvent";
+}
+
+<br />
 
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-5 border p-3">
         <div class="container">
             <div class="">
                 <img src="@Model.Image.ImageUrl" style="width:100%">
             </div>
-
+            <br />
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-12">
                         <div class="card-body">
-                            <h3 class="card-title">Инфо за играта</h3>
+                            <h3 class="card-title">Game Information</h3>
                             <hr />
                             <h5 class="card-title"> @Model.Name</h5>
                             <p class="card-text"> @Model.Description</p>
@@ -23,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-primary"asp-area="Administration" asp-controller="Statistics" asp-action="Index" asp-route-eventId="@Model.Id">Event control</a>
+            <a class="btn btn-primary" asp-area="Administration" asp-controller="Statistics" asp-action="Index" asp-route-eventId="@Model.Id">Event control</a>
         </div>
 
 
@@ -44,13 +50,13 @@
                 <div class="row g-0">
                     <div class="col-md-12">
                         <div class="card-body">
-                            <h3 class="card-title">Инфо за терена</h3>
+                            <h3 class="card-title">Field information</h3>
                             <hr />
                             <p class="card-text"> @Model.Battlefield.Description</p>
 
                             <span style="font-size: 20px; color: dodgerblue;">
                                 <i class="fas fa-street-view"></i>
-                                <a href=" @Model.Battlefield.Location" class="card-link">Локация </a>
+                                <a href=" @Model.Battlefield.Location" class="card-link">Location </a>
                             </span>
 
                         </div>
