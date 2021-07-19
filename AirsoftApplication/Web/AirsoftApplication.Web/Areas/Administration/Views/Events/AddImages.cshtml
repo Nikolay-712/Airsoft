@@ -1,0 +1,13 @@
+﻿@model AirsoftApplication.Web.ViewModels.Administration.Events.InputEventImagesViewModel
+
+<form asp-action="AddImages" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Images" class="control-label alert-heading">Image</label>
+        <input asp-for="Images" class="form-control  alert-heading" type="file" multiple>
+        <span asp-validation-for="Images" class="text-danger"></span>
+    </div>
+    <input asp-for="EventId" class="form-control  alert-heading" type="hidden">
+    <div class="form-group">
+        <input type="submit" value="Add Images" class="btn btn-primary" />
+    </div>
+</form>

@@ -5,6 +5,7 @@
 
     using AirsoftApplication.Web.ViewModels.Administration.Events;
     using AirsoftApplication.Web.ViewModels.Events;
+    using AirsoftApplication.Web.ViewModels.Images;
 
     public interface IEventService
     {
@@ -15,5 +16,11 @@
         Task CreateBattlefieldAsync(InputFieldViewModel input);
 
         EventViewModel UpcomingEvent();
+
+        Task AddImagesAsync(InputEventImagesViewModel input);
+
+        IEnumerable<EventViewModel> AllEvents();
+
+        IEnumerable<ImageViewModel> EventImages(string eventId);
     }
 }

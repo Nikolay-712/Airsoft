@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Users.UserViewModel>
+
+<div class="row justify-content-center mb-3">
+    <div class="col-md-7 text-center">
+        <h1 class="display-5 mb-3">Graoforce Team</h1>
+        <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+    </div>
+</div>
+<div class="row">
+    @foreach (var player in Model)
+    {
+        <div class="col-md-4   align-items-center">
+            <div class="card" style="width: 18rem;">
+                @if (player.Images.Count() < 1)
+                {
+                    <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="#" class="img-fluid">
+
+                }
+                else
+                {
+                    <img src="@player.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" alt="#" class="img-fluid">
+
+
+                }
+                <div class="card-body text-center">
+                    <h5 class="card-title"><strong>@player.PlayerName</strong></h5>
+                    <p class="card-text">@player.AllUserRoles</p>
+                    <a href="#" class="btn btn-primary">Send message</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

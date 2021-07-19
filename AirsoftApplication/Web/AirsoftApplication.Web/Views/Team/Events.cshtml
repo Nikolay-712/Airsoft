@@ -1,0 +1,38 @@
+﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Events.EventViewModel>
+@using AirsoftApplication.Common
+
+
+
+<div class="row">
+    @foreach (var gameevent in Model)
+    {
+        <div class="col-md-5 border p-3">
+            <div class="container">
+                <div class="">
+                    <img src="@gameevent.Image.ImageUrl" style="width:100%">
+                </div>
+                <br />
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <h3 class="card-title">Game Information</h3>
+                                <hr />
+                                <h5 class="card-title"> @gameevent.Name</h5>
+                                <p class="card-text"> @gameevent.Description</p>
+                                <h5 class="card-title"> @gameevent.Date</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-primary" asp-action="Gallery" asp-route-eventId="@gameevent.Id">Gallery</a>
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Events" asp-route-eventId="@gameevent.Id" asp-action="AddImages">Add Images</a>
+                }
+            </div>
+        </div>
+
+    }
+
+</div>

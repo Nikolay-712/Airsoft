@@ -50,5 +50,23 @@
 
             return this.RedirectToAction("CreateEvent");
         }
+
+        public IActionResult AddImages(string eventId)
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddImages(InputEventImagesViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.eventService.AddImagesAsync(input);
+
+            return this.RedirectToAction("Gallery");
+        }
     }
 }

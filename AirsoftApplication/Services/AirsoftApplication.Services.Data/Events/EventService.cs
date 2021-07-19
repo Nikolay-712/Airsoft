@@ -9,6 +9,8 @@
     using AirsoftApplication.Services.Data.Images;
     using AirsoftApplication.Web.ViewModels.Administration.Events;
     using AirsoftApplication.Web.ViewModels.Events;
+    using AirsoftApplication.Web.ViewModels.Images;
+    using Microsoft.AspNetCore.Http;
 
     public class EventService : IEventService
     {
@@ -75,27 +77,44 @@
 
         public EventViewModel UpcomingEvent()
         {
-            var gameEvent = this.eventRepository.All()
+            var gameEvent = this.AllEvents()
                 .OrderByDescending(x => x.Date)
-                .Select(x => new EventViewModel
-                {
-                    Id = x.Id,
-                    Image = this.imageService.GetAllImages(x.Id).FirstOrDefault(),
-                    Date = x.Date.ToString("dd.MM.yyyy"),
-                    Time = x.Time.ToString("HH.mm"),
-                    Name = x.Name,
-                    Description = x.Description,
-                    Battlefield = new FieldViewModel
-                    {
-                        Name = x.Field.Name,
-                        Description = x.Field.Description,
-                        Location = x.Field.Location,
-                        Images = this.imageService.GetAllImages(x.FieldId),
-                    },
-                })
                 .FirstOrDefault();
 
             return gameEvent;
+        }
+
+        public IEnumerable<EventViewModel> AllEvents()
+        {
+            var events = this.eventRepository.All().Select(x => new EventViewModel
+            {
+                Id = x.Id,
+                Image = this.imageService.GetAllImages(x.Id).FirstOrDefault(),
+                Date = x.Date.ToString("dd.MM.yyyy"),
+                Time = x.Time.ToString("HH.mm"),
+                Name = x.Name,
+                Description = x.Description,
+                Battlefield = new FieldViewModel
+                {
+                    Name = x.Field.Name,
+                    Description = x.Field.Description,
+                    Location = x.Field.Location,
+                    Images = this.imageService.GetAllImages(x.FieldId),
+                },
+            }).ToList();
+
+            return events;
+        }
+
+        public async Task AddImagesAsync(InputEventImagesViewModel input)
+        {
+            await this.imageService.UploadFileAsync(input.EventId, input.Images);
+        }
+
+        public IEnumerable<ImageViewModel> EventImages(string eventId)
+        {
+            var images = this.imageService.GetAllImages(eventId);
+            return images;
         }
     }
 }
