@@ -10,7 +10,6 @@
     using AirsoftApplication.Web.ViewModels.Administration.Events;
     using AirsoftApplication.Web.ViewModels.Events;
     using AirsoftApplication.Web.ViewModels.Images;
-    using Microsoft.AspNetCore.Http;
 
     public class EventService : IEventService
     {
@@ -89,7 +88,7 @@
             var events = this.eventRepository.All().Select(x => new EventViewModel
             {
                 Id = x.Id,
-                Image = this.imageService.GetAllImages(x.Id).FirstOrDefault(),
+                Images = this.imageService.GetAllImages(x.Id),
                 Date = x.Date.ToString("dd.MM.yyyy"),
                 Time = x.Time.ToString("HH.mm"),
                 Name = x.Name,
@@ -113,7 +112,7 @@
 
         public IEnumerable<ImageViewModel> EventImages(string eventId)
         {
-            var images = this.imageService.GetAllImages(eventId);
+            var images = this.AllEvents().FirstOrDefault(x => x.Id == eventId).Images;
             return images;
         }
     }

@@ -31,6 +31,11 @@
 
         public IActionResult Gallery(string eventId)
         {
+            if (eventId == null)
+            {
+                return this.RedirectToAction("Events");
+            }
+
             var images = this.teamService.EventImages(eventId);
             return this.View(images);
         }

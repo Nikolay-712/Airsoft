@@ -66,7 +66,7 @@
 
             await this.eventService.AddImagesAsync(input);
 
-            return this.RedirectToAction("Gallery");
+            return this.RedirectToAction("Gallery", "Team", new { eventId = input.EventId, Area = string.Empty });
         }
     }
 }
