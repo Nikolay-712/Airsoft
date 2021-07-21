@@ -1,8 +1,13 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Events.InputFieldViewModel
 
-<h4>Add battlefield</h4>
-<hr />
+<h4>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Dashboard" asp-action="Index" class="link-primary">Dashboard</a>/AddField
+</h4>
+@{
+    ViewData["Title"] = "Add field";
+}
 
+<br />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateField" enctype="multipart/form-data">

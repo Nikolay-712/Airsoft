@@ -1,46 +1,44 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Contacts.InputMessageViewModel
+<h4>
+    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Contacts
+</h4>
 
+@{
+    ViewData["Title"] = "Contacts";
+}
 
-    <h4>
-        <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Contacts
-    </h4>
-
-    @{
-        ViewData["Title"] = "Contacts";
-    }
-   
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Index">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Username" class="control-label"></label>
-                    <input asp-for="Username" class="form-control" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Subject" class="control-label"></label>
-                    <input asp-for="Subject" class="form-control" />
-                    <span asp-validation-for="Subject" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Content" class="control-label"></label>
-                    <textarea rows="5" asp-for="Content" class="form-control"></textarea>
-                    <span asp-validation-for="Content" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Send" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea rows="5" asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Send" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+    <div class="col-lg-6 right-image p-r-0">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d624.7952277044214!2d22.966514229205224!3d42.54866088669482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14aab7876e5480d1%3A0x370af8e15d58be0d!2sAirsoft%20team%20Graoforce!5e1!3m2!1sbg!2sbg!4v1626872026098!5m2!1sbg!2sbg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }

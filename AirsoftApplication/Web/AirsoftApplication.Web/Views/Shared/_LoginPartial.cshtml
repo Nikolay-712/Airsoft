@@ -3,12 +3,15 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))
     {
+
+        var user = await this.UserManager.GetUserAsync(this.User);
+
+
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @this.User.Identity.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @user.PlayerName</a>
         </li>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {

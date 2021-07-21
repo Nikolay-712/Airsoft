@@ -1,15 +1,20 @@
 ﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Events.EventViewModel>
 @using AirsoftApplication.Common
 
+<h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Team" asp-action="Index" class="link-primary">Team</a>/Events</h4>
+@{
+    ViewData["Title"] = "Events";
+}
 
+<br />
 
 <div class="row">
     @foreach (var gameevent in Model)
     {
-        <div class="col-md-5 border p-3">
+        <div class="col-md-6">
             <div class="container">
                 <div class="">
-                    <img src="@gameevent.CoverImage.ImageUrl" style="width:100%">
+                    <img src="@gameevent.CoverImage.ImageUrl" style="width:505px;height:400px">
                 </div>
                 <br />
                 <div class="card mb-3" style="max-width: 540px;">
@@ -19,7 +24,7 @@
                                 <h3 class="card-title">Game Information</h3>
                                 <hr />
                                 <h5 class="card-title"> @gameevent.Name</h5>
-                                <p class="card-text"> @gameevent.Description</p>
+                                <p class="text-justify text-truncate para mb-0">@gameevent.Description<br><br></p>
                                 <h5 class="card-title"> @gameevent.Date</h5>
                             </div>
                         </div>

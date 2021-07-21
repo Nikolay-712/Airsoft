@@ -1,12 +1,18 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Events.InputEventViewModel
 @inject AirsoftApplication.Services.Data.Events.IEventService evntService
 
-@{ 
-    var teamFields = evntService.GetTeamFields();
+<h4>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/
+    <a asp-controller="Dashboard" asp-action="Index" class="link-primary">Dashboard</a>/AddEvent
+</h4>
+@{
+    ViewData["Title"] = "Add event";
 }
 
-<h4>Add Event</h4>
-<hr />
+<br />
+@{
+    var teamFields = evntService.GetTeamFields();
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -87,7 +93,7 @@
                             <th>
                                 <div class="media align-items-center">
                                     <div class="media-body">
-                                        <a class="nav-link active" aria-current="page" href="@field.Location">Лоцация</a>
+                                        <a class="nav-link active" aria-current="page" href="@field.Location">Location</a>
                                     </div>
                                 </div>
                             </th>

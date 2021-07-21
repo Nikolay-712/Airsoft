@@ -1,6 +1,8 @@
 ﻿namespace AirsoftApplication.Services.Data.Events
 {
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -77,8 +79,13 @@
         public EventViewModel UpcomingEvent()
         {
             var gameEvent = this.AllEvents()
-                .OrderByDescending(x => x.Date)
-                .FirstOrDefault();
+                .OrderBy(x => x.Date)
+                .FirstOrDefault(x => DateTime.ParseExact(x.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture) > DateTime.UtcNow);
+
+            if (gameEvent == null)
+            {
+                return gameEvent;
+            }
 
             return gameEvent;
         }

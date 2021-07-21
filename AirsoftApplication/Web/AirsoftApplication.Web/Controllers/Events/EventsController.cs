@@ -16,6 +16,11 @@
         {
             var gameEvent = this.eventService.UpcomingEvent();
 
+            if (gameEvent == null)
+            {
+                return this.RedirectToAction("NoEvents");
+            }
+
             return this.View(gameEvent);
         }
 

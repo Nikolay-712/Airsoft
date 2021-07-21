@@ -1,5 +1,14 @@
 ﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Users.UserViewModel>
 
+<h4>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Dashboard" asp-action="Index" class="link-primary">Dashboard</a>/AllPlayers
+</h4>
+@{
+    ViewData["Title"] = "All players";
+}
+
+<br/>
+
 <div class="col-md-12">
     <div class="table-responsive">
         <table class="table align-items-center table-flush">
@@ -8,7 +17,7 @@
                     <th scope="col" class="sort" data-sort="playerName">Name</th>
                     <th scope="col" class="sort" data-sort="createdOn">Created On</th>
                     <th scope="col" class="sort" data-sort="userRoles">Team Position</th>
-                    <th scope="col"></th>
+                    <th scope="col">Set Role</th>
                 </tr>
             </thead>
             @foreach (var user in Model.OrderByDescending(x => x.AllUserRoles))

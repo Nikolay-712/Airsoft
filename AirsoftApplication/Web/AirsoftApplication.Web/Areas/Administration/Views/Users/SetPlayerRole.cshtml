@@ -1,18 +1,29 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Users.SetUserRoleViewModel
 
 
-<p>@Model.PlayerName </p>
-<p>@Model.CreatedOn </p>
+<h4>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/
+    <a asp-controller="Users" asp-action="Allplayers" class="link-primary">AllPlayers</a>/SetUserRole
+</h4>
+@{
+    ViewData["Title"] = "Set Role";
+}
 
-<p>@Model.CurrentRoles </p>
-
-
+<br />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 text-black-90 text-center border p-2 mr-2">
+        <h4><strong>Player Information</strong></h4>
+        <hr />
+        <p>Player:  <strong>@Model.PlayerName</strong> </p>
+        <p>Registered on: <strong>@Model.CreatedOn</strong> </p>
+
+        <p>Current Position: <strong>@Model.CurrentRoles</strong></p>
+    </div>
+    <div class="col-md-4 border p-2">
         <form asp-action="SetPlayerRole" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="RoleName" class="control-label alert-heading">Role</label>
+                <label asp-for="RoleName" class="control-label alert-heading"><strong>Set user role</strong></label>
                 <select asp-for="RoleName" class="form-control  alert-heading">
                     @if (Model.ApplicationRoles.Count() > 0)
                     {

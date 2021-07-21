@@ -10,13 +10,13 @@
 <br />
 
 <div class="row">
-    <div class="col-md-5 border p-3">
+    <div class="col-md-5">
         <div class="container">
             <div class="">
-                <img src="@Model.CoverImage.ImageUrl" style="width:100%">
+                <img src="@Model.CoverImage.ImageUrl" style=" width:450px;height:400px">
             </div>
             <br />
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3" style="width:450px;height:auto">
                 <div class="row g-0">
                     <div class="col-md-12">
                         <div class="card-body">
@@ -39,14 +39,14 @@
             @foreach (var image in Model.Battlefield.Images)
             {
                 <div class="mySlides">
-                    <img src="@image.ImageUrl" style="width:100%">
+                    <img src="@image.ImageUrl" style="width:600px; height:400px">
                 </div>
 
             }
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3" style="width:600px; height:auto ">
                 <div class="row g-0">
                     <div class="col-md-12">
                         <div class="card-body">

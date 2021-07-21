@@ -1,35 +1,51 @@
 ﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Users.UserViewModel>
 
-<div class="row justify-content-center mb-3">
-    <div class="col-md-7 text-center">
-        <h1 class="display-5 mb-3">Graoforce Team</h1>
-        <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-    </div>
-</div>
-<div class="row">
-    @foreach (var player in Model)
-    {
-        <div class="col-md-4   align-items-center">
-            <div class="card" style="width: 18rem;">
-                @if (player.Images.Count() < 1)
-                {
-                    <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="#" class="img-fluid">
+<h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Team" asp-action="Index" class="link-primary">Team</a>/Players</h4>
+@{
+    ViewData["Title"] = "Players";
+}
+<div class="photo-gallery">
+    <div class="container">
+        <div class="intro">
+            <h2 class="text-center">Players</h2>
+            <p class="text-center">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae. </p>
+        </div>
 
+        <div class="row">
+            @foreach (var player in Model)
+            {
+            <div class="col-md-3 mb-1">
+
+                @if (player.Images.Count() != 0)
+                {
+
+                    <img class="img-fluid" src="@player.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" style="height:310px;width:310px">
                 }
                 else
                 {
-                    <img src="@player.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" alt="#" class="img-fluid">
-
-
+                    <img class="img-fluid" src="~/Images/default-avatar.png" style="height:310px;width:310px">
                 }
-                <div class="card-body text-center">
-                    <h5 class="card-title"><strong>@player.PlayerName</strong></h5>
-                    <p class="card-text">@player.AllUserRoles</p>
-                    <a href="#" class="btn btn-primary">Send message</a>
-                </div>
+                <hr />
+
+                <p>
+                    <strong>
+                        <i class="fas fa-chess-king" style="color:cornflowerblue"></i> @player.PlayerName
+                    </strong>
+                </p>
+                <p>
+                    <strong>
+                        <i class="fas fa-trophy" style="color:green"></i> Graoforce - Team
+                    </strong>
+                </p>
+                <p>
+                    <strong>@player.AllUserRoles</strong>
+                </p>
             </div>
+            }
         </div>
-    }
+
+    </div>
 </div>
+
 
 
