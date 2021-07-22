@@ -4,6 +4,7 @@
 
     using AirsoftApplication.Services.Data.Contacts;
     using AirsoftApplication.Services.Data.Roles;
+    using AirsoftApplication.Services.Data.Statistics;
     using AirsoftApplication.Web.ViewModels.Administration.Dashboard;
     using Microsoft.AspNetCore.Mvc;
 
@@ -11,16 +12,22 @@
     {
         private readonly IContactService contactService;
         private readonly IRoleService roleService;
+        private readonly IAdministrationServive administrationServive;
 
-        public DashboardController(IContactService contactService, IRoleService roleService)
+        public DashboardController(
+            IContactService contactService,
+            IRoleService roleService,
+            IAdministrationServive administrationServive)
         {
             this.contactService = contactService;
             this.roleService = roleService;
+            this.administrationServive = administrationServive;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var statistic = this.administrationServive.GetStatistic();
+            return this.View(statistic);
         }
 
         public IActionResult AllMessages()

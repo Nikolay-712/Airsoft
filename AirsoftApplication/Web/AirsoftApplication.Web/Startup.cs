@@ -1,5 +1,6 @@
 ﻿namespace AirsoftApplication.Web
 {
+    using System.Configuration;
     using System.Reflection;
 
     using AirsoftApplication.Data;
@@ -18,7 +19,6 @@
     using AirsoftApplication.Services.Mapping;
     using AirsoftApplication.Services.Messaging;
     using AirsoftApplication.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -61,6 +61,16 @@
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddAuthentication()
+            .AddGoogle(options =>
+            {
+                IConfigurationSection googleAuthNSection =
+                    this.configuration.GetSection("Authentication:Google");
+
+                options.ClientId = googleAuthNSection["ClientId"];
+                options.ClientSecret = googleAuthNSection["ClientSecret"];
+            });
+
             services.AddSingleton(this.configuration);
 
             // Data repositories
@@ -78,6 +88,7 @@
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IAdministrationServive, AdministrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

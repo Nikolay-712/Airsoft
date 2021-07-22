@@ -15,6 +15,7 @@
             this.contactService = contactService;
         }
 
+        [HttpPost]
         public async Task<IActionResult> ReturnAnswer(MessageViewModel model)
         {
             if (!this.ModelState.IsValid)
@@ -23,7 +24,7 @@
             }
 
             await this.contactService.ReturnAnswerAsync(model);
-            return this.View(); ////Redirect.........
+            return this.RedirectToAction("AllMessages", "Dashboard");
         }
     }
 }

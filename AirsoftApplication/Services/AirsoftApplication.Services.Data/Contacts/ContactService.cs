@@ -48,7 +48,9 @@
                     Content = x.Content,
                     CreatedOn = x.CreatedOn.ToString("dd.MM.yyyy"),
                     HasBeenRead = x.HasBeenRead,
-                }).ToList();
+                })
+                .OrderBy(x => x.HasBeenRead)
+                .ToList();
 
             return messges;
         }
@@ -85,10 +87,11 @@
             if (model.Id != null)
             {
                 var currentMessage = this.messageRepository.All().FirstOrDefault(x => x.Id == model.Id);
-                currentMessage.HasBeenRead = true;
 
                 if (currentMessage.HasBeenRead != true)
                 {
+                    currentMessage.HasBeenRead = true;
+
                     this.messageRepository.Update(currentMessage);
                     await this.messageRepository.SaveChangesAsync();
                 }
