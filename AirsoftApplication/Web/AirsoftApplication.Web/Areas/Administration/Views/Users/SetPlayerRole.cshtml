@@ -1,48 +1,97 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Users.SetUserRoleViewModel
 
-
-<h4>
-    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/
-    <a asp-controller="Users" asp-action="Allplayers" class="link-primary">AllPlayers</a>/SetUserRole
-</h4>
-@{
-    ViewData["Title"] = "Set Role";
-}
-
-<br />
-<div class="row">
-    <div class="col-md-4 text-black-90 text-center border p-2 mr-2">
-        <h4><strong>Player Information</strong></h4>
-        <hr />
-        <p>Player:  <strong>@Model.PlayerName</strong> </p>
-        <p>Registered on: <strong>@Model.CreatedOn</strong> </p>
-
-        <p>Current Position: <strong>@Model.CurrentRoles</strong></p>
-    </div>
-    <div class="col-md-4 border p-2">
-        <form asp-action="SetPlayerRole" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RoleName" class="control-label alert-heading"><strong>Set user role</strong></label>
-                <select asp-for="RoleName" class="form-control  alert-heading">
-                    @if (Model.ApplicationRoles.Count() > 0)
-                    {
-                        @foreach (var role in Model.ApplicationRoles)
-                        {
-                            <option value="@role.Name">@role.Name</option>
-                        }
-
-                    }
-                </select>
-                <span asp-validation-for="RoleName" class="text-danger"></span>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboards</a></li>
+                            <li class="breadcrumb-item"><a asp-action="AllPlayers">Players</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Set Role</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="Dashboard" asp-action="CreateRole" class="btn btn-sm btn-neutral">New Role</a>
+                    <a asp-controller="users" asp-action="AllPlayers" class="btn btn-sm btn-neutral">
+                       Users
+                    </a>
+                </div>
             </div>
-            <div form-group>
-                <input type="hidden" asp-for="UserId" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Set Role" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-4 order-xl-2">
+            <div class="card card-profile">
+                <img src="~/Images/default-avatar.png" alt="Image placeholder" class="card-img-top">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="card-profile-image">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-0">
+                    <div class="row">
+
+                    </div>
+                    <div class="text-center">
+                        <h5 class="h3">
+                            @Model.PlayerName<span class="font-weight-light"></span>
+                        </h5>
+                        <div class="h5 font-weight-300">
+                            <i class="ni location_pin mr-2"></i>@Model.CurrentRoles
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Create Application role </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="SetPlayerRole" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="RoleName" class="control-label alert-heading"><strong>Set user role</strong></label>
+                            <select asp-for="RoleName" class="form-control  alert-heading">
+                                @if (Model.ApplicationRoles.Count() > 0)
+                                {
+                                    @foreach (var role in Model.ApplicationRoles)
+                                    {
+                                        <option value="@role.Name">@role.Name</option>
+                                    }
+
+                                }
+                            </select>
+                            <span asp-validation-for="RoleName" class="text-danger"></span>
+                        </div>
+                        <div form-group>
+                            <input type="hidden" asp-for="UserId" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Set Role" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 

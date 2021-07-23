@@ -20,7 +20,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.RedirectToAction("MessageById", "Dashboard", new { messageId = model.Id });
             }
 
             await this.contactService.ReturnAnswerAsync(model);

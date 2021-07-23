@@ -1,109 +1,150 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Events.InputEventViewModel
 @inject AirsoftApplication.Services.Data.Events.IEventService evntService
 
-<h4>
-    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/
-    <a asp-controller="Dashboard" asp-action="Index" class="link-primary">Dashboard</a>/AddEvent
-</h4>
-@{
-    ViewData["Title"] = "Add event";
-}
-
-<br />
 @{
     var teamFields = evntService.GetTeamFields();
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateEvent" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Event name</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboards</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Events</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="Events" asp-action="CreateField" class="btn btn-sm btn-neutral">New field</a>
+                    <a asp-area="" asp-controller="Team" asp-action="Events" class="btn btn-sm btn-neutral">
+                       All evnts
+                    </a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Description</label>
-                <textarea rows="5" asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label">Date</label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Time" class="control-label">Time</label>
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FieldId" class="control-label alert-heading">Game field</label>
-                <select asp-for="FieldId" class="form-control  alert-heading">
-
-                    @foreach (var field in teamFields)
-                    {
-                        <option value="@field.FieldId">@field.Name</option>
-                    }
-
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Images" class="control-label alert-heading">Image</label>
-                <input asp-for="Images" class="form-control  alert-heading" type="file">
-                <span asp-validation-for="Images" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add event" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-
-    <div class="col-md-8">
-        <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col" class="sort" data-sort="fieldName">Field name</th>
-                        <th scope="col" class="sort" data-sort="createdOn">Created on</th>
-                        <th scope="col" class="sort" data-sort="location">Location</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                @foreach (var field in teamFields)
-                {
-                    <tbody class="list">
-                        <tr>
-                            <th scope="row">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <span class="fieldName mb-0 text-sm">@field.Name</span>
-                                    </div>
-                                </div>
-                            </th>
-
-                            <th scope="row">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <span class="createdOn mb-0 text-sm">@field.CreatedOn</span>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <a class="nav-link active" aria-current="page" href="@field.Location">Location</a>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                    </tbody>
-                }
-            </table>
         </div>
-        <div class="form-group">
-            <a class="btn btn-primary" value="Add field" asp-action="CreateField">Add new location</a>
+    </div>
+</div>
+
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-7 order-xl-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <h3 class="mb-0">Team fields </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="fieldName">Field name</th>
+                                    <th scope="col" class="sort" data-sort="createdOn">Created on</th>
+                                    <th scope="col" class="sort" data-sort="location">Location</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            @foreach (var field in teamFields)
+                            {
+                                <tbody class="list">
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <span class="fieldName mb-0 text-sm">@field.Name</span>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <span class="createdOn mb-0 text-sm">@field.CreatedOn</span>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <a class="nav-link active" aria-current="page" href="@field.Location">Location</a>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <a class="btn btn-primary" value="Add field" asp-action="CreateField">Add new location</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Create event</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateEvent" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Event name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label">Description</label>
+                            <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Date" class="control-label">Date</label>
+                            <input asp-for="Date" class="form-control" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Time" class="control-label">Time</label>
+                            <input asp-for="Time" class="form-control" />
+                            <span asp-validation-for="Time" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FieldId" class="control-label alert-heading">Game field</label>
+                            <select asp-for="FieldId" class="form-control  alert-heading">
+
+                                @foreach (var field in teamFields)
+                                {
+                                    <option value="@field.FieldId">@field.Name</option>
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Images" class="control-label alert-heading">Image</label>
+                            <input asp-for="Images" class="form-control  alert-heading" type="file">
+                            <span asp-validation-for="Images" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add event" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

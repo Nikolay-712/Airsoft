@@ -1,61 +1,140 @@
 ﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Users.UserViewModel>
 
-<h4>
-    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Dashboard" asp-action="Index" class="link-primary">Dashboard</a>/AllPlayers
-</h4>
-@{
-    ViewData["Title"] = "All players";
-}
-
-<br/>
-
-<div class="col-md-12">
-    <div class="table-responsive">
-        <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col" class="sort" data-sort="playerName">Name</th>
-                    <th scope="col" class="sort" data-sort="createdOn">Created On</th>
-                    <th scope="col" class="sort" data-sort="userRoles">Team Position</th>
-                    <th scope="col">Set Role</th>
-                </tr>
-            </thead>
-            @foreach (var user in Model.OrderByDescending(x => x.AllUserRoles))
-            {
-                <tbody class="list">
-                    <tr>
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="playerName mb-0 text-sm">@user.PlayerName</span>
-                                </div>
-                            </div>
-                        </th>
-
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="createdOn mb-0 text-sm">@user.CreatedOn</span>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="userRoles mb-0 text-sm">@user.AllUserRoles</span>
-                                </div>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <a class="nav-link active" aria-current="page" asp-action="SetPlayerRole" asp-route-userId="@user.UserId">Set Role</a>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                </tbody>
-            }
-        </table>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a asp-action="Index">Dashboards</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Messages</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="#" class="btn btn-sm btn-neutral">New</a>
+                    <a asp-controller="Dashboard" asp-action="AllMessages" class="btn btn-sm btn-neutral">
+                        <i class="fas fa-bell"></i> Messages
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Messages</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="image">Image</th>
+                                <th scope="col" class="sort" data-sort="createdOn">date</th>
+                                <th scope="col" class="sort" data-sort="name">Name</th>
+                                <th scope="col" class="sort" data-sort="role">Role</th>
+                                <th scope="col" class="sort" data-sort="setRole">Set Role</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @foreach (var user in Model)
+                            {
+
+                                <tr>
+                                    @if (user.Images.Any())
+                                    {
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <a class="avatar rounded-circle mr-4">
+                                                    <img alt="Image placeholder" src="@user.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl">
+                                                </a>
+                                            </div>
+                                        </th>
+                                    }
+                                    else
+                                    {
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <a class="avatar rounded-circle mr-3">
+                                                    <img alt="Image placeholder" src="~/Images/default-avatar.png">
+                                                </a>
+                                            </div>
+                                        </th>
+                                    }
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">@user.CreatedOn</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">@user.PlayerName</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">@user.AllUserRoles</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <a asp-action="SetPlayerRole" asp-controller="Users" asp-route-userId="@user.UserId">
+                                                <div class="media-body">
+                                                    <span class="name mb-0 text-sm">Set Role</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <td>
+                                    </td>
+                                </tr>
+                            }
+                    </table>
+
+                    <!-- Card footer -->
+                    <div class="card-footer py-4">
+                        <nav aria-label="...">
+                            <ul class="pagination justify-content-end mb-0">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fas fa-angle-left"></i>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

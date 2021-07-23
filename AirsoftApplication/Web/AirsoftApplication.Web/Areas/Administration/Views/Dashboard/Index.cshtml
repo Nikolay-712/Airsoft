@@ -1,4 +1,6 @@
-﻿<div class="header bg-primary pb-6">
+﻿@model AirsoftApplication.Web.ViewModels.Administration.Dashboard.AdministrationStatisticViewModel
+
+<div class="header bg-primary pb-6">
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
@@ -14,7 +16,9 @@
                 </div>
                 <div class="col-lg-6 col-5 text-right">
                     <a href="#" class="btn btn-sm btn-neutral">New</a>
-                    <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                    <a asp-controller="Dashboard" asp-action="AllMessages" class="btn btn-sm btn-neutral">
+                        <i class="fas fa-bell"></i> @Model.UnreadMessages Messages
+                    </a>
                 </div>
             </div>
             <!-- Card stats -->
@@ -25,8 +29,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Total traffic</h5>
-                                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Total users</h5>
+                                    <span class="h2 font-weight-bold mb-0">@Model.RegisteredUsers</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -34,10 +38,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-3 mb-0 text-sm">
-                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                <span class="text-nowrap">Since last month</span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Team Players</h5>
                                     <span class="h2 font-weight-bold mb-0">2,356</span>
                                 </div>
                                 <div class="col-auto">
@@ -56,10 +56,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-3 mb-0 text-sm">
-                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                <span class="text-nowrap">Since last month</span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -69,8 +65,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-                                    <span class="h2 font-weight-bold mb-0">924</span>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Events</h5>
+                                    <span class="h2 font-weight-bold mb-0">@Model.OrganizedEvents</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -78,10 +74,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-3 mb-0 text-sm">
-                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                <span class="text-nowrap">Since last month</span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -100,10 +92,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-3 mb-0 text-sm">
-                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                <span class="text-nowrap">Since last month</span>
-                            </p>
                         </div>
                     </div>
                 </div>

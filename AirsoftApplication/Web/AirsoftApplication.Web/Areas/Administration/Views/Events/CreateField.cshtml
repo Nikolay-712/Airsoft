@@ -1,41 +1,76 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Events.InputFieldViewModel
 
-<h4>
-    <a asp-area="" asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Dashboard" asp-action="Index" class="link-primary">Dashboard</a>/AddField
-</h4>
-@{
-    ViewData["Title"] = "Add field";
-}
-
-<br />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateField" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Field name</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboards</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Events" asp-action="CreateEvent">Event</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Field</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-area="" asp-controller="Team" asp-action="Events" class="btn btn-sm btn-neutral">
+                        All evnts
+                    </a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Description</label>
-                <textarea rows="5" asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LocationUrl" class="control-label">Google maps location</label>
-                <input asp-for="LocationUrl" class="form-control" />
-                <span asp-validation-for="LocationUrl" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Images" class="form-label">Images</label>
-                <input asp-for="Images" class="form-control" type="file" id="formFileMultiple" multiple>
-                <span asp-validation-for="Images" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add battlefield" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Create field</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateField" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Field name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label">Description</label>
+                            <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LocationUrl" class="control-label">Google maps location</label>
+                            <input asp-for="LocationUrl" class="form-control" />
+                            <span asp-validation-for="LocationUrl" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Images" class="form-label">Images</label>
+                            <input asp-for="Images" class="form-control" type="file" id="formFileMultiple" multiple>
+                            <span asp-validation-for="Images" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add battlefield" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
