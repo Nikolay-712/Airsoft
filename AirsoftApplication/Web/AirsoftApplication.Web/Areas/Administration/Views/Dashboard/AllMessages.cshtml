@@ -23,90 +23,90 @@
             </div>
         </div>
     </div>
-</div>
-
-
-
-<div class="col-md-12">
-    <div class="table-responsive">
-        <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col" class="sort" data-sort="sendOn">Send on</th>
-                    <th scope="col" class="sort" data-sort="email">Email</th>
-                    <th scope="col" class="sort" data-sort="username">Username</th>
-                    <th scope="col" class="sort" data-sort="subject">Subject</th>
-                    <th scope="col" class="sort" data-sort="content">Content</th>
-                    <th scope="col" class="sort" data-sort="status">Status</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            @foreach (var message in Model)
-            {
-                <tbody class="list">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+                <thead class="thead-light">
                     <tr>
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="sendon mb-0 text-sm">@message.CreatedOn</span>
-                                </div>
-                            </div>
-                        </th>
-
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="email mb-0 text-sm">@message.Email</span>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="username mb-0 text-sm">@message.Username</span>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <span class="subject mb-0 text-sm">@message.Subject</span>
-                                </div>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    <a class="nav-link active" aria-current="page" asp-action="MessageById" asp-route-messageId="@message.Id">Content</a>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="row">
-                            <div class="media align-items-center">
-                                <div class="media-body">
-                                    @if (message.HasBeenRead)
-                                    {
-                                        <span class="badge badge-dot mr-4">
-                                            <i class="bg-success"></i>
-                                            <span class="status">answered </span>
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-dot mr-4">
-                                            <i class="bg-warning"></i>
-                                            <span class="status">not answered  </span>
-                                        </span>
-                                    }
-
-
-                                    <span class="status mb-0 text-sm"></span>
-                                </div>
-                            </div>
-                        </th>
+                        <th scope="col" class="sort" data-sort="sendOn">Send on</th>
+                        <th scope="col" class="sort" data-sort="email">Email</th>
+                        <th scope="col" class="sort" data-sort="username">Username</th>
+                        <th scope="col" class="sort" data-sort="subject">Subject</th>
+                        <th scope="col" class="sort" data-sort="content">Content</th>
+                        <th scope="col" class="sort" data-sort="status">Status</th>
+                        <th scope="col"></th>
                     </tr>
-                </tbody>
-            }
-        </table>
+                </thead>
+                @foreach (var message in Model)
+                {
+                    <tbody class="list">
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="sendon mb-0 text-sm">@message.CreatedOn</span>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="email mb-0 text-sm">@message.Email</span>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="username mb-0 text-sm">@message.Username</span>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="subject mb-0 text-sm">@message.Subject</span>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <a class="nav-link active" aria-current="page" asp-action="MessageById" asp-route-messageId="@message.Id">Content</a>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        @if (message.HasBeenRead)
+                                        {
+                                            <span class="badge badge-dot mr-4">
+                                                <i class="bg-success"></i>
+                                                <span class="status">answered </span>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-dot mr-4">
+                                                <i class="bg-warning"></i>
+                                                <span class="status">not answered  </span>
+                                            </span>
+                                        }
+
+
+                                        <span class="status mb-0 text-sm"></span>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
     </div>
 </div>
+
+
+
