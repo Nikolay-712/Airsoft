@@ -21,6 +21,8 @@
 
         IEnumerable<EventViewModel> AllEvents();
 
+        EventDeteilsViewModel EventDetails(string eventId);
+
         IEnumerable<ImageViewModel> EventImages(string eventId);
     }
 }

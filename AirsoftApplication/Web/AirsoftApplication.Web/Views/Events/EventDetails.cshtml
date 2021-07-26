@@ -1,0 +1,104 @@
+﻿@model AirsoftApplication.Web.ViewModels.Events.EventDeteilsViewModel
+@using AirsoftApplication.Common
+
+<h4>
+    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Team" asp-action="Events" class="link-primary">Events</a>/Details
+</h4>
+@{
+    ViewData["Title"] = "Details";
+}
+
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="container">
+            <div class="">
+                <img src="@Model.CoverImage.ImageUrl" style="width:315px;height:300px">
+            </div>
+            <div class="col mt-2">
+                <a class="btn btn-primary" asp-controller="Comments" asp-action="Index" asp-route-eventId="@Model.Id">Comment</a>
+            </div>
+            <br />
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <h3 class="card-title">Game Information</h3>
+                            <hr />
+                            <h5>@Model.Name</h5>
+                            <p class="text-justify">@Model.Description<br><br></p>
+                            <h5 class="card-title">
+                                @Model.Date
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="classic-tabs border rounded px-4 pt-1">
+
+            <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active show" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="description" aria-selected="true">Comments(@Model.CommentsCount)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Team" asp-action="Gallery" asp-route-eventId="@Model.Id" aria-selected="false">Gallery</a>
+                </li>
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Administration" asp-controller="Events" asp-route-eventId="@Model.Id" asp-action="AddImages">Add Images</a>
+                    </li>
+                }
+            </ul>
+            <hr />
+            <div class="tab-content" id="advancedTabContent">
+                <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div class="media mt-3 mb-4">
+                            @if (comment.UserId != null && comment.ProfileImageUrl != null)
+                            {
+                                <img class="d-flex mr-3 z-depth-1" src="@comment.ProfileImageUrl" width="62" alt="Generic placeholder image">
+                            }
+                            else
+                            {
+                                <img class="d-flex mr-3 z-depth-1" src="~/Images/default-avatar.png" width="62" alt="Generic placeholder image">
+                            }
+
+                        <div class="media-body">
+                            <div class="d-sm-flex justify-content-between">
+                                <p class="mt-1 mb-2">
+                                    @if (comment.UserId != null)
+                                    {
+                                        <strong>@comment.PlayerName </strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>Anonymous </strong>
+                                    }
+                                    <span>– </span><span>@comment.Date</span>
+                                </p>
+                            </div>
+                            <p class="mb-0">@comment.Content</p>
+                            <hr />
+                           
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-sm">Comment</button>
+                            </div>
+
+                        </div>
+                        </div>
+                        <hr>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -8,6 +8,7 @@
 
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Events;
+    using AirsoftApplication.Services.Data.Comments;
     using AirsoftApplication.Services.Data.Images;
     using AirsoftApplication.Web.ViewModels.Administration.Events;
     using AirsoftApplication.Web.ViewModels.Events;
@@ -18,15 +19,18 @@
         private readonly IDeletableEntityRepository<Battlefield> fieldRepository;
         private readonly IDeletableEntityRepository<Event> eventRepository;
         private readonly IImageService imageService;
+        private readonly ICommentService commentService;
 
         public EventService(
             IDeletableEntityRepository<Battlefield> fieldRepository,
             IDeletableEntityRepository<Event> eventRepository,
-            IImageService imageService)
+            IImageService imageService,
+            ICommentService commentService)
         {
             this.fieldRepository = fieldRepository;
             this.eventRepository = eventRepository;
             this.imageService = imageService;
+            this.commentService = commentService;
         }
 
         public IEnumerable<FieldViewModel> GetTeamFields()
@@ -110,6 +114,23 @@
             }).ToList();
 
             return events;
+        }
+
+        public EventDeteilsViewModel EventDetails(string eventId)
+        {
+            var gameEvent = this.eventRepository.All()
+                .Where(x => x.Id == eventId)
+                .Select(x => new EventDeteilsViewModel
+                {
+                    Id = x.Id,
+                    Images = this.imageService.GetAllImages(x.Id),
+                    Date = x.Date.ToString("dd.MM.yyyy"),
+                    Name = x.Name,
+                    Description = x.Description,
+                    Comments = this.commentService.AllComments(x.Id),
+                }).FirstOrDefault();
+
+            return gameEvent;
         }
 
         public async Task AddImagesAsync(InputEventImagesViewModel input)

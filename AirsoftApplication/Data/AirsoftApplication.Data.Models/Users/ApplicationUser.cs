@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using AirsoftApplication.Data.Common.Models;
+    using AirsoftApplication.Data.Models.Comments;
     using AirsoftApplication.Data.Models.Guns;
     using AirsoftApplication.Data.Models.Images;
     using AirsoftApplication.Data.Models.Statistics;
@@ -14,6 +15,7 @@
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Commnents = new HashSet<Comment>();
             this.Guns = new HashSet<Gun>();
             this.Statistics = new HashSet<Statistic>();
             this.Roles = new HashSet<IdentityUserRole<string>>();
@@ -33,14 +35,16 @@
 
         public DateTime? DeletedOn { get; set; }
 
+        public ICollection<Comment> Commnents { get; set; }
+
         public ICollection<Gun> Guns { get; set; }
 
         public ICollection<Statistic> Statistics { get; set; }
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+        public ICollection<IdentityUserRole<string>> Roles { get; set; }
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        public ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+        public ICollection<IdentityUserLogin<string>> Logins { get; set; }
     }
 }

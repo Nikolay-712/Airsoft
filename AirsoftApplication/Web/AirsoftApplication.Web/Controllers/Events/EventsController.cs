@@ -24,6 +24,13 @@
             return this.View(gameEvent);
         }
 
+        public IActionResult EventDetails(string eventId)
+        {
+            var gameEvent = this.eventService.EventDetails(eventId);
+
+            return this.View(gameEvent);
+        }
+
         public IActionResult NoEvents()
         {
             return this.View();

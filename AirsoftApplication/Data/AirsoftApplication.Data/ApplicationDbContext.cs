@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using AirsoftApplication.Data.Common.Models;
+    using AirsoftApplication.Data.Models.Comments;
     using AirsoftApplication.Data.Models.Contacts;
     using AirsoftApplication.Data.Models.Events;
     using AirsoftApplication.Data.Models.Guns;
@@ -42,6 +43,8 @@
         public DbSet<Statistic> Statistics { get; set; }
 
         public DbSet<StatisticInfo> StatisticInfos { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

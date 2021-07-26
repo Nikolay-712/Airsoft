@@ -23,18 +23,13 @@
                             <div class="card-body">
                                 <h3 class="card-title">Game Information</h3>
                                 <hr />
-                                <h5 class="card-title"> @gameevent.Name</h5>
+                                <h5><a asp-controller="Events" asp-action="EventDetails" asp-route-eventId="@gameevent.Id" class="link-primary">@gameevent.Name</a></h5>
                                 <p class="text-justify text-truncate para mb-0">@gameevent.Description<br><br></p>
                                 <h5 class="card-title"> @gameevent.Date</h5>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary" asp-action="Gallery" asp-route-eventId="@gameevent.Id">Gallery</a>
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                {
-                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Events" asp-route-eventId="@gameevent.Id" asp-action="AddImages">Add Images</a>
-                }
             </div>
         </div>
 
