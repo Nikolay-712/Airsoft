@@ -49,5 +49,35 @@
 
             return this.RedirectToAction("EventDetails", "Events", new { eventId = input.EventId });
         }
+
+        public IActionResult SubComment(string commentId, string eventId)
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubComment(InputSubCommentViewModel input)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            string userId = null;
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            if (user != null)
+            {
+                userId = user.Id;
+            }
+
+            if (input.EventId == null)
+            {
+                return this.RedirectToAction("Events", "Team");
+            }
+            await this.commentService.AddSubCommentAsync(userId, input);
+
+            return this.RedirectToAction("EventDetails", "Events", new { eventId = input.EventId });
+        }
     }
 }

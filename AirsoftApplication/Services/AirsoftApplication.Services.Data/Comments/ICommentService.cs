@@ -9,6 +9,8 @@
     {
         Task AddCommentAsync(string userId, InputCommentViewModel input);
 
-        IEnumerable<CommentViewModel> AllComments(string eventId);
+        Task AddSubCommentAsync(string userId, InputSubCommentViewModel input);
+
+        IEnumerable<CommentViewModel> AllCommentsByEvent(string eventId);
     }
 }

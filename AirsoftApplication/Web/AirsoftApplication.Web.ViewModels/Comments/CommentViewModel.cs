@@ -22,6 +22,8 @@
 
         public IEnumerable<ImageViewModel> Images { get; set; }
 
+        public IEnumerable<CommentViewModel> SubComments { get; set; }
+
         private string GetProfileImage()
         {
             if (this.UserId != null)

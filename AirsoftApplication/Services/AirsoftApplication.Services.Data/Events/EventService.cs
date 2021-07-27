@@ -127,7 +127,7 @@
                     Date = x.Date.ToString("dd.MM.yyyy"),
                     Name = x.Name,
                     Description = x.Description,
-                    Comments = this.commentService.AllComments(x.Id),
+                    Comments = this.commentService.AllCommentsByEvent(x.Id),
                 }).FirstOrDefault();
 
             return gameEvent;

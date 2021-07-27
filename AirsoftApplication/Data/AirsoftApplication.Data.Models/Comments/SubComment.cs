@@ -1,29 +1,23 @@
 ﻿namespace AirsoftApplication.Data.Models.Comments
 {
     using System;
-    using System.Collections.Generic;
 
     using AirsoftApplication.Data.Common.Models;
-    using AirsoftApplication.Data.Models.Events;
     using AirsoftApplication.Data.Models.Users;
 
-    public class Comment : BaseDeletableModel<string>
+    public class SubComment : BaseDeletableModel<string>
     {
-        public Comment()
+        public SubComment()
         {
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public string EventId { get; set; }
-
-        public Event Event { get; set; }
+        public string CommentId { get; set; }
 
         public string Content { get; set; }
 
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
-
-        public ICollection<SubComment> SubComments { get; set; }
     }
 }

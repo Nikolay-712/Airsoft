@@ -16,7 +16,7 @@
             <div class="">
                 <img src="@Model.CoverImage.ImageUrl" style="width:315px;height:300px">
             </div>
-            <div class="col mt-2">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-2">
                 <a class="btn btn-primary" asp-controller="Comments" asp-action="Index" asp-route-eventId="@Model.Id">Comment</a>
             </div>
             <br />
@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-8">
         <div class="classic-tabs border rounded px-4 pt-1">
 
@@ -85,14 +86,46 @@
                             </div>
                             <p class="mb-0">@comment.Content</p>
                             <hr />
-                           
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-primary btn-sm">Comment</button>
-                            </div>
+                            @foreach (var subComment in comment.SubComments)
+                            {
 
+                                <div class="media mt-3 mb-4">
+                                    @if (subComment.UserId != null && subComment.ProfileImageUrl != null)
+                                    {
+                                        <img class="d-flex mr-3 z-depth-1" src="@subComment.ProfileImageUrl" width="62" alt="Generic placeholder image">
+                                    }
+                                    else
+                                    {
+                                        <img class="d-flex mr-3 z-depth-1" src="~/Images/default-avatar.png" width="62" alt="Generic placeholder image">
+                                    }
+                                    <div class="media-body">
+                                        <div class="d-sm-flex justify-content-between">
+                                            <p class="mt-1 mb-2">
+                                                @if (subComment.UserId != null)
+                                                {
+                                                    <strong>@subComment.PlayerName </strong>
+                                                }
+                                                else
+                                                {
+                                                    <strong>Anonymous </strong>
+                                                }
+                                                <span>– </span><span>@subComment.Date</span>
+                                            </p>
+                                        </div>
+                                        <p class="mb-0">@subComment.Content</p>
+                                    </div>
+                                    <hr />
+                                </div>
+
+                            }
+                        <div class="d-md-flex justify-content-md-end">
+                            <a class="btn btn-primary btn-sm" asp-controller="Comments" asp-action="SubComment" asp-route-eventId="@Model.Id" asp-route-commentId="@comment.Id">Comment</a>
+                        </div>
+                           
+                            <hr />
                         </div>
                         </div>
-                        <hr>
+
                     }
 
                 </div>
@@ -100,5 +133,4 @@
 
         </div>
     </div>
-
 </div>
