@@ -27,17 +27,9 @@
         [HttpPost]
         public async Task<IActionResult> Index(InputCommentViewModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            string userId = null;
-
             if (!this.ModelState.IsValid)
             {
                 return this.View();
-            }
-
-            if (user != null)
-            {
-                userId = user.Id;
             }
 
             if (input.EventId == null)
@@ -45,7 +37,7 @@
                 return this.RedirectToAction("Events", "Team");
             }
 
-            await this.commentService.AddCommentAsync(userId, input);
+            await this.commentService.AddCommentAsync(await this.GetUserId(), input);
 
             return this.RedirectToAction("EventDetails", "Events", new { eventId = input.EventId });
         }
@@ -58,26 +50,32 @@
         [HttpPost]
         public async Task<IActionResult> SubComment(InputSubCommentViewModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            string userId = null;
-
             if (!this.ModelState.IsValid)
             {
                 return this.View();
-            }
-
-            if (user != null)
-            {
-                userId = user.Id;
             }
 
             if (input.EventId == null)
             {
                 return this.RedirectToAction("Events", "Team");
             }
-            await this.commentService.AddSubCommentAsync(userId, input);
+
+            await this.commentService.AddSubCommentAsync(await this.GetUserId(), input);
 
             return this.RedirectToAction("EventDetails", "Events", new { eventId = input.EventId });
+        }
+
+        private async Task<string> GetUserId()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            string userId = null;
+
+            if (user != null)
+            {
+                userId = user.Id;
+            }
+
+            return userId;
         }
     }
 }

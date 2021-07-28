@@ -1,0 +1,41 @@
+﻿@model AirsoftApplication.Web.ViewModels.Events.EventDeteilsViewModel
+
+
+@foreach (var comment in Model.Comments)
+{
+    <div class="media mt-3 mb-4">
+        @if (comment.UserId != null && comment.ProfileImageUrl != null)
+        {
+            <img class="d-flex mr-3 z-depth-1" src="@comment.ProfileImageUrl" width="62" height="72" alt="Generic placeholder image">
+        }
+        else
+        {
+            <img class="d-flex mr-3 z-depth-1" src="~/Images/default-avatar.png" width="62" alt="Generic placeholder image">
+        }
+
+        <div class="media-body">
+            <div class="d-sm-flex justify-content-between">
+                <p class="mt-1 mb-2">
+                    @if (comment.UserId != null)
+                    {
+                        <strong>@comment.PlayerName </strong>
+                    }
+                    else
+                    {
+                        <strong>Anonymous </strong>
+                    }
+                    <span>– </span><span>@comment.Date</span>
+                </p>
+            </div>
+            <p class="mb-0">@comment.Content</p>
+            <hr />
+
+            <partial name="_CommentContentPartial" model="@comment" />
+
+            <div class="d-md-flex justify-content-md-end">
+                <a class="btn btn-primary btn-sm" asp-controller="Comments" asp-action="SubComment" asp-route-eventId="@Model.Id" asp-route-commentId="@comment.Id">Comment</a>
+            </div>
+            <hr />
+        </div>
+    </div>
+}

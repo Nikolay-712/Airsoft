@@ -1,27 +1,7 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Comments.InputCommentViewModel
 
-<h4>
-    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Team" asp-action="Events" class="link-primary">Events</a>/Comments
-</h4>
-
 @{
     ViewData["Title"] = "Comments";
 }
 
-<hr />
-<div class="row">
-    <div class="offset-2 col-md-8">
-        <form asp-controller="Comments" asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <textarea rows="5" asp-for="Content" class="form-control"></textarea>
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <input asp-for="EventId" class="form-control  alert-heading" type="hidden">
-            <div class="form-group">
-                <input type="submit" value="Send" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<partial name="_AddCommentPartial" model="@Model" action="Index" />

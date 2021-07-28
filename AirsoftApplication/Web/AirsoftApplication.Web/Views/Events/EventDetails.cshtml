@@ -43,7 +43,7 @@
 
             <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active show" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="description" aria-selected="true">Comments(@Model.CommentsCount)</a>
+                    <a class="nav-link active show" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="true">Comments(@Model.CommentsCount)</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Team" asp-action="Gallery" asp-route-eventId="@Model.Id" aria-selected="false">Gallery</a>
@@ -58,79 +58,9 @@
             <hr />
             <div class="tab-content" id="advancedTabContent">
                 <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-                    @foreach (var comment in Model.Comments)
-                    {
-                        <div class="media mt-3 mb-4">
-                            @if (comment.UserId != null && comment.ProfileImageUrl != null)
-                            {
-                                <img class="d-flex mr-3 z-depth-1" src="@comment.ProfileImageUrl" width="62" alt="Generic placeholder image">
-                            }
-                            else
-                            {
-                                <img class="d-flex mr-3 z-depth-1" src="~/Images/default-avatar.png" width="62" alt="Generic placeholder image">
-                            }
-
-                        <div class="media-body">
-                            <div class="d-sm-flex justify-content-between">
-                                <p class="mt-1 mb-2">
-                                    @if (comment.UserId != null)
-                                    {
-                                        <strong>@comment.PlayerName </strong>
-                                    }
-                                    else
-                                    {
-                                        <strong>Anonymous </strong>
-                                    }
-                                    <span>– </span><span>@comment.Date</span>
-                                </p>
-                            </div>
-                            <p class="mb-0">@comment.Content</p>
-                            <hr />
-                            @foreach (var subComment in comment.SubComments)
-                            {
-
-                                <div class="media mt-3 mb-4">
-                                    @if (subComment.UserId != null && subComment.ProfileImageUrl != null)
-                                    {
-                                        <img class="d-flex mr-3 z-depth-1" src="@subComment.ProfileImageUrl" width="62" alt="Generic placeholder image">
-                                    }
-                                    else
-                                    {
-                                        <img class="d-flex mr-3 z-depth-1" src="~/Images/default-avatar.png" width="62" alt="Generic placeholder image">
-                                    }
-                                    <div class="media-body">
-                                        <div class="d-sm-flex justify-content-between">
-                                            <p class="mt-1 mb-2">
-                                                @if (subComment.UserId != null)
-                                                {
-                                                    <strong>@subComment.PlayerName </strong>
-                                                }
-                                                else
-                                                {
-                                                    <strong>Anonymous </strong>
-                                                }
-                                                <span>– </span><span>@subComment.Date</span>
-                                            </p>
-                                        </div>
-                                        <p class="mb-0">@subComment.Content</p>
-                                    </div>
-                                    <hr />
-                                </div>
-
-                            }
-                        <div class="d-md-flex justify-content-md-end">
-                            <a class="btn btn-primary btn-sm" asp-controller="Comments" asp-action="SubComment" asp-route-eventId="@Model.Id" asp-route-commentId="@comment.Id">Comment</a>
-                        </div>
-                           
-                            <hr />
-                        </div>
-                        </div>
-
-                    }
-
+                    <partial name="_CommentPartial" model="@Model" />
                 </div>
             </div>
-
         </div>
     </div>
 </div>

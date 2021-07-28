@@ -7,6 +7,7 @@
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Comments;
     using AirsoftApplication.Services.Data.Images;
+    using AirsoftApplication.Services.Mapping;
     using AirsoftApplication.Web.ViewModels.Comments;
 
     public class CommentService : ICommentService
@@ -63,7 +64,7 @@
                     Content = x.Content,
                     UserId = x.UserId,
                     PlayerName = x.User.PlayerName,
-                    Images = this.imageService.GetAllImages(x.UserId),
+                    ProfileImageUrl = this.imageService.GetProfileImageUrl(x.UserId),
                     SubComments = x.SubComments
                         .Where(sc => sc.CommentId == x.Id)
                         .OrderByDescending(sc => sc.CreatedOn)
@@ -74,11 +75,17 @@
                             Content = sc.Content,
                             UserId = sc.UserId,
                             PlayerName = sc.User.PlayerName,
-                            Images = this.imageService.GetAllImages(sc.UserId),
+                            ProfileImageUrl = this.imageService.GetProfileImageUrl(sc.UserId),
                         }).ToList(),
                 }).ToList();
 
             return comments;
+        }
+
+        public CommentViewModel CommentById(string commentId, string eventId)
+        {
+            var comment = this.AllCommentsByEvent(eventId).FirstOrDefault(x => x.Id == commentId);
+            return comment;
         }
     }
 }

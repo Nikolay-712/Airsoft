@@ -77,5 +77,16 @@
 
             return images;
         }
+
+        public string GetProfileImageUrl(string userId)
+        {
+            if (userId == null)
+            {
+                return null;
+            }
+
+            var url = this.GetAllImages(userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl;
+            return url;
+        }
     }
 }

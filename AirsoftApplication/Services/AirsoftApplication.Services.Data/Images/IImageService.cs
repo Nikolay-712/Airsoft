@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using AirsoftApplication.Web.ViewModels.Images;
     using Microsoft.AspNetCore.Http;
 
@@ -12,5 +13,7 @@
         Task DeleteFileAsync(string imageId);
 
         IEnumerable<ImageViewModel> GetAllImages(string guidingId);
+
+        string GetProfileImageUrl(string userId);
     }
 }

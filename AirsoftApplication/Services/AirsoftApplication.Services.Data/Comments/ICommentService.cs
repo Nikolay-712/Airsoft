@@ -12,5 +12,7 @@
         Task AddSubCommentAsync(string userId, InputSubCommentViewModel input);
 
         IEnumerable<CommentViewModel> AllCommentsByEvent(string eventId);
+
+        CommentViewModel CommentById(string commentId, string eventId);
     }
 }
