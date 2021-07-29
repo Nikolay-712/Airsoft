@@ -14,7 +14,7 @@
     using AirsoftApplication.Data.Models.Images;
     using AirsoftApplication.Data.Models.Statistics;
     using AirsoftApplication.Data.Models.Users;
-
+    using AirsoftApplication.Data.Models.Votes;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +39,8 @@
         public DbSet<Gun> Guns { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
 
         public DbSet<Statistic> Statistics { get; set; }
 

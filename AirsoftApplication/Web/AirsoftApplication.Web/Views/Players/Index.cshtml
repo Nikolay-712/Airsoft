@@ -1,35 +1,44 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Users.UserViewModel
+@using AirsoftApplication.Data.Models.Guns
+
 
 <h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Profile</h4>
 @{
     ViewData["Title"] = "Player profile";
 }
 <br />
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="border p-4 ">
     <div class="row">
         <div class="col-xs-3 col-md-4 col-lg-3">
-            <div class="userProfileInfo">
+            <div class="">
                 <div class="image text-center">
-                    @if (Model.Images.Count() < 1)
+                    @if (Model.ProfileImageUrl == null)
                     {
-                        <img src="~/Images/default-avatar.png" alt="#" class="img-fluid">
-                        <a asp-action="UploadProfileImage" title="" class="editImage">
-                            <i class="fa fa-camera"></i>
+                        <a class="pull-left">
+                            <img class="media-object " src="~/Images/default-avatar.png" alt="Avatar" width="250" height="300">
                         </a>
+                        <span style="font-size: 2em ">
+                            <a asp-action="UploadProfileImage" title="" class="editImage">
+                                <i class="fa fa-camera"></i>
+                            </a>
+                        </span>
                     }
                     else
                     {
-                        <img src="@Model.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl" alt="#" class="img-fluid">
-                        <a asp-action="UploadProfileImage" title="" class="editImage">
-                            <i class="fa fa-camera"></i>
+                        <a class="pull-left">
+                            <img class="media-object " src="@Model.ProfileImageUrl" alt="Avatar" width="250" height="300">
                         </a>
 
+                        <span style="font-size: 2em ">
+                            <a asp-action="UploadProfileImage" title="" class="editImage">
+                                <i class="fa fa-camera"></i>
+                            </a>
+                        </span>
                     }
 
                 </div>
                 <br />
-                <div class="border p-3 col-sm mb-3">
+                <div class="col-sm mb-3">
                     <div class="">
                         <div class="name"><strong>@Model.PlayerName - Graoforce Team</strong></div>
                         <div class="info">
@@ -40,9 +49,35 @@
             </div>
         </div>
 
-        <div class="col-md border p-3 col-sm mb-3">
-            <a class="btn btn-primary" asp-action="AddGun">Add guns</a>
+        <div class="col-md  col-sm mb-3">
+            <div class="classic-tabs border rounded px-4 pt-1">
+
+                <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active show" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="guns-tab" data-toggle="tab" href="#guns" role="tab" aria-controls="guns" aria-selected="false">Guns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage" aria-selected="false">Account</a>
+                    </li>
+                </ul>
+                <hr />
+                <div class="tab-content" id="advancedTabContent">
+                    <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                        <partial name="_MessagePrtial"  />
+                    </div>
+
+                    <div class="tab-pane fade" id="guns" role="tabpanel" aria-labelledby="guns-tab">
+                        <partial name="_AddGunPartial" model="@Model.Input" />
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
 
 
     </div>

@@ -85,8 +85,14 @@
                 return null;
             }
 
-            var url = this.GetAllImages(userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl;
-            return url;
+            var images = this.GetAllImages(userId);
+
+            if (images.Count() < 1)
+            {
+                return null;
+            }
+
+            return images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl;
         }
     }
 }

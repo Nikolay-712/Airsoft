@@ -8,9 +8,11 @@
     using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Web.ViewModels.Guns;
     using AirsoftApplication.Web.ViewModels.Images;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class PlayersController : Controller
     {
         private readonly IGunService gunService;

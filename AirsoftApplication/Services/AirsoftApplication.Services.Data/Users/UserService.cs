@@ -36,7 +36,6 @@
                 {
                     UserId = user.Id,
                     PlayerName = user.PlayerName,
-                    Images = this.imageService.GetAllImages(user.Id),
                     CreatedOn = user.CreatedOn.ToString("dd.MM.yyyy"),
                     Roles = user.Roles.Select(x => x.RoleId),
                     Guns = user.Guns.Select(gun => new GunViewModel
@@ -79,6 +78,8 @@
 
                 user.AllUserRoles = userRoles.ToString().TrimEnd('/');
                 userRoles.Clear();
+
+                user.ProfileImageUrl = this.imageService.GetProfileImageUrl(user.UserId);
             }
         }
     }

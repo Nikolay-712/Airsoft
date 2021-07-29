@@ -8,6 +8,7 @@
     using AirsoftApplication.Data.Models.Guns;
     using AirsoftApplication.Data.Models.Images;
     using AirsoftApplication.Data.Models.Statistics;
+    using AirsoftApplication.Data.Models.Votes;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -16,6 +17,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Commnents = new HashSet<Comment>();
+            this.Votes = new HashSet<Vote>();
             this.Guns = new HashSet<Gun>();
             this.Statistics = new HashSet<Statistic>();
             this.Roles = new HashSet<IdentityUserRole<string>>();
@@ -36,6 +38,8 @@
         public DateTime? DeletedOn { get; set; }
 
         public ICollection<Comment> Commnents { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
 
         public ICollection<Gun> Guns { get; set; }
 

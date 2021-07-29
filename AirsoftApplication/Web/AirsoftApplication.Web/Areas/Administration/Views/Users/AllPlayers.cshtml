@@ -50,12 +50,12 @@
                             {
 
                                 <tr>
-                                    @if (user.Images.Any())
+                                    @if (user.ProfileImageUrl != null)
                                     {
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <a class="avatar rounded-circle mr-4">
-                                                    <img alt="Image placeholder" src="@user.Images.OrderByDescending(x => x.CreatedOn).FirstOrDefault().ImageUrl">
+                                                    <img alt="Image placeholder" src="@user.ProfileImageUrl">
                                                 </a>
                                             </div>
                                         </th>

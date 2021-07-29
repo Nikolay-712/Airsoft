@@ -6,6 +6,7 @@
     using AirsoftApplication.Data.Common.Models;
     using AirsoftApplication.Data.Models.Comments;
     using AirsoftApplication.Data.Models.Images;
+    using AirsoftApplication.Data.Models.Votes;
 
     public class Event : BaseDeletableModel<string>
     {
@@ -13,6 +14,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
+            this.Votes = new HashSet<Vote>();
         }
 
         public string Name { get; set; }
@@ -32,5 +34,7 @@
         public Battlefield Field { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
     }
 }
