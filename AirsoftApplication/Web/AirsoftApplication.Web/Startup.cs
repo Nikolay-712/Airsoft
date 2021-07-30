@@ -17,6 +17,7 @@
     using AirsoftApplication.Services.Data.Statistics;
     using AirsoftApplication.Services.Data.Team;
     using AirsoftApplication.Services.Data.Users;
+    using AirsoftApplication.Services.Data.Votes;
     using AirsoftApplication.Services.Mapping;
     using AirsoftApplication.Services.Messaging;
     using AirsoftApplication.Web.ViewModels;
@@ -91,6 +92,7 @@
             services.AddTransient<ITeamService, TeamService>();
             services.AddTransient<IAdministrationServive, AdministrationService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IVoteService, VoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
