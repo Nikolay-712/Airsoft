@@ -7,7 +7,7 @@
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Comments;
     using AirsoftApplication.Services.Data.Images;
-    using AirsoftApplication.Services.Mapping;
+    using AirsoftApplication.Services.Data.Votes;
     using AirsoftApplication.Web.ViewModels.Comments;
 
     public class CommentService : ICommentService
@@ -15,15 +15,18 @@
         private readonly IDeletableEntityRepository<Comment> commentRepository;
         private readonly IDeletableEntityRepository<SubComment> subCommentRepository;
         private readonly IImageService imageService;
+        private readonly IVoteService voteService;
 
         public CommentService(
             IDeletableEntityRepository<Comment> commentRepository,
             IDeletableEntityRepository<SubComment> subCommentRepository,
-            IImageService imageService)
+            IImageService imageService,
+            IVoteService voteService)
         {
             this.commentRepository = commentRepository;
             this.subCommentRepository = subCommentRepository;
             this.imageService = imageService;
+            this.voteService = voteService;
         }
 
         public async Task AddCommentAsync(string userId, InputCommentViewModel input)
@@ -65,6 +68,7 @@
                     UserId = x.UserId,
                     PlayerName = x.User.PlayerName,
                     ProfileImageUrl = this.imageService.GetProfileImageUrl(x.UserId),
+                    Vote = this.voteService.GetVotes(x.Id),
                     SubComments = x.SubComments
                         .Where(sc => sc.CommentId == x.Id)
                         .OrderByDescending(sc => sc.CreatedOn)

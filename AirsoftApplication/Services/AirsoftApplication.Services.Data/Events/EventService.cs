@@ -10,6 +10,7 @@
     using AirsoftApplication.Data.Models.Events;
     using AirsoftApplication.Services.Data.Comments;
     using AirsoftApplication.Services.Data.Images;
+    using AirsoftApplication.Services.Data.Votes;
     using AirsoftApplication.Web.ViewModels.Administration.Events;
     using AirsoftApplication.Web.ViewModels.Events;
     using AirsoftApplication.Web.ViewModels.Images;
@@ -20,17 +21,20 @@
         private readonly IDeletableEntityRepository<Event> eventRepository;
         private readonly IImageService imageService;
         private readonly ICommentService commentService;
+        private readonly IVoteService voteService;
 
         public EventService(
             IDeletableEntityRepository<Battlefield> fieldRepository,
             IDeletableEntityRepository<Event> eventRepository,
             IImageService imageService,
-            ICommentService commentService)
+            ICommentService commentService,
+            IVoteService voteService)
         {
             this.fieldRepository = fieldRepository;
             this.eventRepository = eventRepository;
             this.imageService = imageService;
             this.commentService = commentService;
+            this.voteService = voteService;
         }
 
         public IEnumerable<FieldViewModel> GetTeamFields()
@@ -128,6 +132,7 @@
                     Name = x.Name,
                     Description = x.Description,
                     Comments = this.commentService.AllCommentsByEvent(x.Id),
+                    Vote = this.voteService.GetVotes(x.Id),
                 }).FirstOrDefault();
 
             return gameEvent;

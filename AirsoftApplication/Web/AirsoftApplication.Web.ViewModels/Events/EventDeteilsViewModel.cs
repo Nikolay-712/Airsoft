@@ -5,6 +5,7 @@
 
     using AirsoftApplication.Web.ViewModels.Comments;
     using AirsoftApplication.Web.ViewModels.Images;
+    using AirsoftApplication.Web.ViewModels.Vote;
 
     public class EventDeteilsViewModel
     {
@@ -23,5 +24,7 @@
         public int CommentsCount => this.Comments.Count();
 
         public IEnumerable<CommentViewModel> Comments { get; set; }
+
+        public VoteViewModel Vote { get; set; }
     }
 }

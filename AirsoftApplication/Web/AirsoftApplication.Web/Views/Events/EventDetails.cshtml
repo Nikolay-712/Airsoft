@@ -1,5 +1,10 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Events.EventDeteilsViewModel
 @using AirsoftApplication.Common
+@inject Microsoft.AspNetCore.Identity.UserManager<AirsoftApplication.Data.Models.Users.ApplicationUser> UserManager
+
+@{
+    var user = await this.UserManager.GetUserAsync(this.User);
+}
 
 <h4>
     <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Team" asp-action="Events" class="link-primary">Events</a>/Details
@@ -17,7 +22,44 @@
                 <img src="@Model.CoverImage.ImageUrl" style="width:315px;height:300px">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-2">
-                <a class="btn btn-primary" asp-controller="Comments" asp-action="Index" asp-route-eventId="@Model.Id">Comment</a>
+                <a class="btn btn-primary mr-1" asp-controller="Comments" asp-action="Index" asp-route-eventId="@Model.Id">Comment</a>
+
+                @if (user == null)
+                {
+                    <a class="btn btn-secondary mr-1">
+                        <i class="fas fa-thumbs-up"></i> (@Model.Vote.PositiveVotes)
+                    </a>
+                    <a class="btn btn-secondary">
+                        <i class="fas fa-thumbs-down"></i> (@Model.Vote.NegativeVotes)
+                    </a>
+
+                }
+                else
+                {
+                    @if (!Model.Vote.VotedUsers.ToList().Contains(user.Id))
+                    {
+                        <a class="btn btn-primary mr-1" asp-controller="Vote" asp-action="PositiveVote" asp-route-eventId="@Model.Id" asp-route-guidingId="@Model.Id">
+                            <i class="fas fa-thumbs-up"></i> (@Model.Vote.PositiveVotes)
+                        </a>
+                        <a class="btn btn-danger" asp-controller="Vote" asp-action="NegativeVote" asp-route-eventId="@Model.Id" asp-route-guidingId="@Model.Id">
+                            <i class="fas fa-thumbs-down"></i> (@Model.Vote.NegativeVotes)
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-secondary mr-1">
+                            <i class="fas fa-thumbs-up"></i> (@Model.Vote.PositiveVotes)
+                        </a>
+                        <a class="btn btn-secondary">
+                            <i class="fas fa-thumbs-down"></i> (@Model.Vote.NegativeVotes)
+                        </a>
+                    }
+                }
+
+
+
+
+
             </div>
             <br />
             <div class="card mb-3" style="max-width: 540px;">
