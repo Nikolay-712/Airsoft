@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Web.ViewModels.ValidationAttributes;
     using Microsoft.AspNetCore.Http;
 
@@ -12,7 +13,7 @@
         public string EventId { get; set; }
 
         [Required]
-        [AllowedFileParmaeters(new string[] { "jpg", "png", "jpeg" }, 5)]
+        [AllowedFileParmaeters(new string[] { "jpg", "png", "jpeg" }, GlobalConstants.Files.MaxSize)]
         public IEnumerable<IFormFile> Images { get; set; }
     }
 }

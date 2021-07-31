@@ -4,15 +4,16 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
+    using AirsoftApplication.Common;
     using Microsoft.AspNetCore.Http;
 
     public class AllowedFileParmaetersAttribute : ValidationAttribute
     {
         private const int MaxFilesCont = 4;
 
-        private const string NotSupportedFileExtension = "Фаила който се опитвате да качите не се подържа. ( {0} )";
-        private const string MaxFileSizeMessage = "Фаила който се опитвате да качите не може да бъде по голям от {0}";
-        private const string MaxFilesContMessage = "Не може да добавите повече от {0} фаила";
+        private const string NotSupportedFileExtension = "The file you are trying to learn is not supported. ( {0} )";
+        private const string MaxFileSizeMessage = "The file you are trying to upload cannot be larger than {0} MB.";
+        private const string MaxFilesContMessage = "You cannot add more than {0} fails";
 
         private readonly string[] fileExtensions;
         private readonly int maxFileSize;
@@ -29,9 +30,8 @@
 
             if (files == null)
             {
-                return new ValidationResult("Добавете снимки!");
+                return new ValidationResult("Add photos!");
             }
-
 
             if (files.Count() > MaxFilesCont)
             {
@@ -46,7 +46,7 @@
 
                 if (file.Length > maxSize)
                 {
-                    return new ValidationResult(string.Format(MaxFileSizeMessage, "5 MB."));
+                    return new ValidationResult(string.Format(MaxFileSizeMessage, GlobalConstants.Files.MaxSize));
                 }
 
                 if (!this.fileExtensions.Contains(contentTyep[1]))

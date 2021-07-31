@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Contacts;
     using AirsoftApplication.Services.Messaging;
@@ -46,7 +47,7 @@
                     Email = x.Email,
                     Subject = x.Subject,
                     Content = x.Content,
-                    CreatedOn = x.CreatedOn.ToString("dd.MM.yyyy"),
+                    CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                     HasBeenRead = x.HasBeenRead,
                 })
                 .OrderBy(x => x.HasBeenRead)
@@ -65,7 +66,7 @@
                     Email = x.Email,
                     Subject = x.Subject,
                     Content = x.Content,
-                    CreatedOn = x.CreatedOn.ToString("dd.MM.yyyy"),
+                    CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                     HasBeenRead = x.HasBeenRead,
                 })
                 .FirstOrDefault(x => x.Id == messageId);
@@ -75,8 +76,8 @@
 
         public async Task ReturnAnswerAsync(MessageViewModel model)
         {
-            var fromEmail = "graoforce@abv.bg"; ////Global constants
-            var fromName = "Graoforce Team"; ////Global constants
+            var fromEmail = GlobalConstants.Team.Email;
+            var fromName = GlobalConstants.Team.Name;
 
             var toEmail = model.Email;
             var subject = model.MessageSubject;

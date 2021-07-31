@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Comments;
     using AirsoftApplication.Services.Data.Images;
@@ -63,7 +64,7 @@
                 .Select(x => new CommentViewModel
                 {
                     Id = x.Id,
-                    Date = x.CreatedOn.ToString("dd.MM.yyyy"),
+                    Date = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                     Content = x.Content,
                     UserId = x.UserId,
                     PlayerName = x.User.PlayerName,
@@ -75,7 +76,7 @@
                         .Select(sc => new CommentViewModel
                         {
                             Id = sc.Id,
-                            Date = sc.CreatedOn.ToString("dd.MM.yyyy"),
+                            Date = sc.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                             Content = sc.Content,
                             UserId = sc.UserId,
                             PlayerName = sc.User.PlayerName,

@@ -5,6 +5,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Services.Data.Images;
@@ -36,7 +37,7 @@
                 {
                     UserId = user.Id,
                     PlayerName = user.PlayerName,
-                    CreatedOn = user.CreatedOn.ToString("dd.MM.yyyy"),
+                    CreatedOn = user.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                     Roles = user.Roles.Select(x => x.RoleId),
                     Guns = user.Guns.Select(gun => new GunViewModel
                     {

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using AirsoftApplication.Common;
     using AirsoftApplication.Services.Data.Events;
     using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Web.ViewModels.Events;
@@ -24,7 +24,7 @@
         {
             var players = this.userService
                 .GetAllUsers()
-                .Where(x => x.AllUserRoles.Contains("Soldier")).ToList();
+                .Where(x => x.AllUserRoles.Contains(GlobalConstants.ApplicationRole.SoldierRoleName)).ToList();
 
             return players;
         }

@@ -2,11 +2,13 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using AirsoftApplication.Common;
+
     public class InputMessageViewModel
     {
         [Required]
-        [MaxLength(50)]
-        [MinLength(5)]
+        [MaxLength(GlobalConstants.NameMaxLenght)]
+        [MinLength(GlobalConstants.NameMinLenght)]
         public string Username { get; set; }
 
         [Required]
@@ -14,13 +16,13 @@
         public string Email { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        [MinLength(5)]
+        [MaxLength(GlobalConstants.NameMaxLenght)]
+        [MinLength(GlobalConstants.NameMinLenght)]
         public string Subject { get; set; }
 
         [Required]
-        [MaxLength(500)]
-        [MinLength(20)]
+        [MaxLength(GlobalConstants.MessageContentMaxLenght)]
+        [MinLength(GlobalConstants.MessageContentMinLenght)]
         public string Content { get; set; }
     }
 }

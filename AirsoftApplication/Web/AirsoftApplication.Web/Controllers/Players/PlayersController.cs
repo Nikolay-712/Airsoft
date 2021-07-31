@@ -6,6 +6,7 @@
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Services.Data.Guns;
     using AirsoftApplication.Services.Data.Users;
+    using AirsoftApplication.Web.Infrastructure;
     using AirsoftApplication.Web.ViewModels.Guns;
     using AirsoftApplication.Web.ViewModels.Images;
     using Microsoft.AspNetCore.Authorization;
@@ -17,25 +18,20 @@
     {
         private readonly IGunService gunService;
         private readonly IUserService userService;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public PlayersController(
             IGunService gunService,
-            IUserService userService,
-            UserManager<ApplicationUser> userManager)
+            IUserService userService)
         {
             this.gunService = gunService;
             this.userService = userService;
-            this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var playerId = await this.GetCurrentUserId();
-
             var player = this.userService
                 .GetAllUsers()
-                .FirstOrDefault(x => x.UserId == playerId);
+                .FirstOrDefault(x => x.UserId == ClaimsPrincipalExtensions.Id(this.User));
 
             return this.View(player);
         }
@@ -53,7 +49,7 @@
                 return this.View();
             }
 
-            await this.gunService.AddGunAsync(await this.GetCurrentUserId(), input);
+            await this.gunService.AddGunAsync(ClaimsPrincipalExtensions.Id(this.User), input);
 
             return this.RedirectToAction("Index");
         }
@@ -71,14 +67,8 @@
                 return this.View();
             }
 
-            await this.userService.UploadProfileImageAsync(await this.GetCurrentUserId(), input);
+            await this.userService.UploadProfileImageAsync(ClaimsPrincipalExtensions.Id(this.User), input);
             return this.RedirectToAction("Index");
-        }
-
-        private async Task<string> GetCurrentUserId()
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
-            return user.Id;
         }
     }
 }

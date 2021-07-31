@@ -2,18 +2,11 @@
 @using AirsoftApplication.Data.Models.Users
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))
     {
-
-        var user = await this.UserManager.GetUserAsync(this.User);
-
-
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @user.PlayerName</a>
-        </li>
-        if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+        if (this.User.IsInRole(GlobalConstants.ApplicationRole.AdministratorRoleName))
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>

@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Events;
     using AirsoftApplication.Services.Data.Comments;
@@ -45,7 +46,7 @@
                       FieldId = x.Id,
                       Name = x.Name,
                       Description = x.Description,
-                      CreatedOn = x.CreatedOn.ToString("dd.MM.yyyy"),
+                      CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                       Location = x.Location,
                   }).ToList();
 
@@ -88,12 +89,8 @@
         {
             var gameEvent = this.AllEvents()
                 .OrderBy(x => x.Date)
-                .FirstOrDefault(x => DateTime.ParseExact(x.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture) > DateTime.UtcNow);
-
-            if (gameEvent == null)
-            {
-                return gameEvent;
-            }
+                .FirstOrDefault(x => DateTime
+                .ParseExact(x.Date, GlobalConstants.DateTimeFormat.DateFormat, CultureInfo.InvariantCulture) > DateTime.UtcNow);
 
             return gameEvent;
         }
@@ -104,8 +101,8 @@
             {
                 Id = x.Id,
                 Images = this.imageService.GetAllImages(x.Id),
-                Date = x.Date.ToString("dd.MM.yyyy"),
-                Time = x.Time.ToString("HH.mm"),
+                Date = x.Date.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                Time = x.Time.ToString(GlobalConstants.DateTimeFormat.TimeFormat),
                 Name = x.Name,
                 Description = x.Description,
                 Battlefield = new FieldViewModel
@@ -128,7 +125,7 @@
                 {
                     Id = x.Id,
                     Images = this.imageService.GetAllImages(x.Id),
-                    Date = x.Date.ToString("dd.MM.yyyy"),
+                    Date = x.Date.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                     Name = x.Name,
                     Description = x.Description,
                     Comments = this.commentService.AllCommentsByEvent(x.Id),

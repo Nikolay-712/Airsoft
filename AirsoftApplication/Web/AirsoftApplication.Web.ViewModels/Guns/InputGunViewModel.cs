@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Data.Models.Guns;
 
     public class InputGunViewModel
@@ -11,8 +12,8 @@
         public GunType GunType { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        [MinLength(3)]
+        [MaxLength(GlobalConstants.ManufactureMaxLenght)]
+        [MinLength(GlobalConstants.ManufactureMinLenght)]
         public string Manufacture { get; set; }
     }
 }

@@ -90,7 +90,7 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Team" asp-action="Gallery" asp-route-eventId="@Model.Id" aria-selected="false">Gallery</a>
                 </li>
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                @if (this.User.IsInRole(GlobalConstants.ApplicationRole.AdministratorRoleName))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Administration" asp-controller="Events" asp-route-eventId="@Model.Id" asp-action="AddImages">Add Images</a>
