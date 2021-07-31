@@ -7,8 +7,6 @@
 
     public interface IRoleService
     {
-        Task CreateRoleAsync(string roleName);
-
         IEnumerable<ApplicationRole> GetApplicationRoles();
 
         Task AddUserToRoleAsync(string userId, string roleName);

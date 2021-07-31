@@ -105,6 +105,9 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
+
+                var services = serviceScope.ServiceProvider;
+                Infrastructure.ApplicationBuilderExtensions.SeedApplicationRoles(services);
             }
 
             if (env.IsDevelopment())

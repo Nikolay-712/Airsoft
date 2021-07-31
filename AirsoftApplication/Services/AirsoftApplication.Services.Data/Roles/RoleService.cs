@@ -18,14 +18,6 @@
             this.userManager = userManager;
         }
 
-        public async Task CreateRoleAsync(string roleName)
-        {
-            if (!await this.roleManager.RoleExistsAsync(roleName))
-            {
-                await this.roleManager.CreateAsync(new ApplicationRole(roleName));
-            }
-        }
-
         public IEnumerable<ApplicationRole> GetApplicationRoles()
         {
             return this.roleManager.Roles.ToList();

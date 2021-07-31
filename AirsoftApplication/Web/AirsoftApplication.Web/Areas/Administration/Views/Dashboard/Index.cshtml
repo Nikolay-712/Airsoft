@@ -15,9 +15,10 @@
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a href="#" class="btn btn-sm btn-neutral">New</a>
+                    
                     <a asp-controller="Dashboard" asp-action="AllMessages" class="btn btn-sm btn-neutral">
-                        <i class="fas fa-bell"></i> @Model.UnreadMessages Messages
+                        <i class="fas fa-bell">
+                        </i> @Model.UnreadMessages Messages
                     </a>
                 </div>
             </div>
@@ -34,6 +35,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                        <i class="fas fa-users"></i>
                                         <i class="ni ni-active-40"></i>
                                     </div>
                                 </div>
@@ -48,10 +50,11 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Team Players</h5>
-                                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                                    <span class="h2 font-weight-bold mb-0">@Model.UsersInTeamRole</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class="fab fa-teamspeak"></i>
                                         <i class="ni ni-chart-pie-35"></i>
                                     </div>
                                 </div>
@@ -70,6 +73,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                        <i class="fas fa-bomb"></i>
                                         <i class="ni ni-money-coins"></i>
                                     </div>
                                 </div>
@@ -99,3 +103,76 @@
         </div>
     </div>
 </div>
+
+
+<div class="container-fluid mt--6">
+    <div class="card bg-default shadow">
+        <div class="card-header bg-transparent border-0">
+            <h3 class="text-white mb-0">Dark table</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-dark table-flush">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" class="sort" data-sort="name">Name</th>
+                        <th scope="col" class="sort" data-sort="date">Date</th>
+                        <th scope="col" class="sort" data-sort="location">Location</th>
+                        <th scope="col" class="sort" data-sort="completion">Positive</th>
+                        <th scope="col" class="sort" data-sort="completion">Negative</th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+
+                    @foreach (var gameEvent in Model.Events)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="badge badge-dot mr-4">
+                                        <span class="location">
+                                            <a asp-area="" asp-controller="Events" asp-action="EventDetails" asp-route-eventId="@gameEvent.Id" class="card-link">
+                                                @gameEvent.Name
+                                            </a>
+                                        </span>
+                                    </span>
+                                </div>
+                            </th>
+                            <td class="date">
+                                @gameEvent.Date
+                            </td>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    <i class="bg-success"></i>
+                                    <span class="location"><a href=" @gameEvent.Location" class="card-link">Location </a></span>
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="completion mr-2">100%</span>
+                                    <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: @gameEvent.Vote.PositiveVotes%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="completion mr-2">100%</span>
+                                    <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: @gameEvent.Vote.NegativeVotes%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

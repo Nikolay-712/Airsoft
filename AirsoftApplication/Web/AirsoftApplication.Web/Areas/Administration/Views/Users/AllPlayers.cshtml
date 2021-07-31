@@ -9,13 +9,12 @@
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a asp-action="Index">Dashboards</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboards</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Messages</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a href="#" class="btn btn-sm btn-neutral">New</a>
                     <a asp-controller="Dashboard" asp-action="AllMessages" class="btn btn-sm btn-neutral">
                         <i class="fas fa-bell"></i> Messages
                     </a>
@@ -53,9 +52,9 @@
                                     @if (user.ProfileImageUrl != null)
                                     {
                                         <th scope="row">
-                                            <div class="media align-items-center">
+                                            <div class="media align-items-center border-radius: 50">
                                                 <a class="avatar rounded-circle mr-4">
-                                                    <img alt="Image placeholder" src="@user.ProfileImageUrl">
+                                                    <img alt="Image placeholder" src="@user.ProfileImageUrl" width="30" height="50">
                                                 </a>
                                             </div>
                                         </th>
@@ -65,7 +64,7 @@
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <a class="avatar rounded-circle mr-3">
-                                                    <img alt="Image placeholder" src="~/Images/default-avatar.png">
+                                                    <img alt="Image placeholder" src="~/Images/default-avatar.png" width="30" height="50">
                                                 </a>
                                             </div>
                                         </th>
