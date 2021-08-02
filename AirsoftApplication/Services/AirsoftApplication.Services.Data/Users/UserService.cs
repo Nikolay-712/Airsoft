@@ -9,6 +9,8 @@
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Services.Data.Images;
+    using AirsoftApplication.Services.Data.Roles;
+    using AirsoftApplication.Web.ViewModels.Administration.Users;
     using AirsoftApplication.Web.ViewModels.Guns;
     using AirsoftApplication.Web.ViewModels.Images;
     using AirsoftApplication.Web.ViewModels.Users;
@@ -18,15 +20,18 @@
     {
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IImageService imageService;
+        private readonly IRoleService roleService;
         private readonly RoleManager<ApplicationRole> roleManager;
 
         public UserService(
             IDeletableEntityRepository<ApplicationUser> userRepository,
             IImageService imageService,
+            IRoleService roleService,
             RoleManager<ApplicationRole> roleManager)
         {
             this.userRepository = userRepository;
             this.imageService = imageService;
+            this.roleService = roleService;
             this.roleManager = roleManager;
         }
 
@@ -39,6 +44,7 @@
                     PlayerName = user.PlayerName,
                     CreatedOn = user.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                     Roles = user.Roles.Select(x => x.RoleId),
+                    ProfileImageUrl = this.imageService.GetProfileImageUrl(user.Id),
                     Guns = user.Guns.Select(gun => new GunViewModel
                     {
                         GunId = gun.Id,
@@ -61,6 +67,27 @@
         public async Task UploadProfileImageAsync(string userId, InputImageViewModel input)
         {
             await this.imageService.UploadFileAsync(userId, input.Files);
+        }
+
+        public SetUserRoleViewModel GetPlayerInformation(string userId)
+        {
+            var user = this.GetUserById(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userInfo = new SetUserRoleViewModel
+            {
+                PlayerName = user.PlayerName,
+                ProfileImage = user.ProfileImageUrl,
+                CreatedOn = user.CreatedOn,
+                CurrentRoles = user.AllUserRoles,
+                ApplicationRoles = this.roleService.GetApplicationRoles(),
+            };
+
+            return userInfo;
         }
 
         private void UserRolesToString(IEnumerable<UserViewModel> users)

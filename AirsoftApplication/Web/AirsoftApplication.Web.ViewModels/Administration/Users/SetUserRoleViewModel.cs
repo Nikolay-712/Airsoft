@@ -11,6 +11,8 @@
 
         public string PlayerName { get; set; }
 
+        public string ProfileImage { get; set; }
+
         public string CreatedOn { get; set; }
 
         public string CurrentRoles { get; set; }

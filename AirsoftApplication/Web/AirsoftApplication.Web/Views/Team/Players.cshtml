@@ -14,34 +14,8 @@
         <div class="row">
             @foreach (var player in Model)
             {
-                <div class="col-md-3 mb-1">
-                    @if (player.ProfileImageUrl != null)
-                    {
-
-                        <img class="img-fluid" src="@player.ProfileImageUrl" style="height:310px;width:310px">
-                    }
-                    else
-                    {
-                        <img class="img-fluid" src="~/Images/default-avatar.png" style="height:310px;width:310px">
-                    }
-                    <hr />
-
-                    <p>
-                        <strong>
-                            <i class="fas fa-chess-king" style="color:cornflowerblue"></i> @player.PlayerName
-                        </strong>
-                        <div class="d-md-flex justify-content-md-end">
-                            <a class="btn btn-primary btn-sm" asp-controller="Contacts" asp-action="PrivateMessage" asp-route-userId="@player.UserId">Send message</a>
-                        </div>
-                    </p>
-                    <p>
-                        <strong>
-                            <i class="fas fa-trophy" style="color:green"></i> Graoforce - Team
-                        </strong>
-                    </p>
-                    <p>
-                        <strong>@player.AllUserRoles</strong>
-                    </p>
+                <div class="col-md-4">
+                    <img src="@player.ProfileImageUrl" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                 </div>
             }
         </div>

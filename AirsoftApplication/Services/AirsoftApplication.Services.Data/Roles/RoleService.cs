@@ -39,5 +39,11 @@
                 await this.userManager.AddToRoleAsync(user, roleName);
             }
         }
+
+        public async Task RemoveUserRoleAsync(string userId, string roleName)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+            await this.userManager.RemoveFromRoleAsync(user, roleName);
+        }
     }
 }

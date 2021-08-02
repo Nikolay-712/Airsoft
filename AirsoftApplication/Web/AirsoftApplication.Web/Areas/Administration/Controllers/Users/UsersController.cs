@@ -26,14 +26,12 @@
 
         public IActionResult SetPlayerRole(string userId)
         {
-            var user = this.userService.GetUserById(userId);
-            var userInfo = new SetUserRoleViewModel
+            var userInfo = this.userService.GetPlayerInformation(userId);
+
+            if (userInfo == null)
             {
-                PlayerName = user.PlayerName,
-                CreatedOn = user.CreatedOn,
-                CurrentRoles = user.AllUserRoles,
-                ApplicationRoles = this.roleService.GetApplicationRoles(),
-            };
+                return this.RedirectToAction("AllPlayers");
+            }
 
             return this.View(userInfo);
         }
@@ -43,10 +41,34 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(this.userService.GetPlayerInformation(model.UserId));
             }
 
             await this.roleService.AddUserToRoleAsync(model.UserId, model.RoleName);
+            return this.RedirectToAction("AllPlayers");
+        }
+
+        public IActionResult RemovePlayerRole(string userId)
+        {
+            var userInfo = this.userService.GetPlayerInformation(userId);
+
+            if (userInfo == null)
+            {
+                return this.RedirectToAction("AllPlayers");
+            }
+
+            return this.View(userInfo);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemovePlayerRole(SetUserRoleViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(this.userService.GetPlayerInformation(model.UserId));
+            }
+
+            await this.roleService.RemoveUserRoleAsync(model.UserId, model.RoleName);
             return this.RedirectToAction("AllPlayers");
         }
     }

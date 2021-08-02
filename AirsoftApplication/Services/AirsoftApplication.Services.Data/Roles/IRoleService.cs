@@ -10,5 +10,7 @@
         IEnumerable<ApplicationRole> GetApplicationRoles();
 
         Task AddUserToRoleAsync(string userId, string roleName);
+
+        Task RemoveUserRoleAsync(string userId, string roleName);
     }
 }

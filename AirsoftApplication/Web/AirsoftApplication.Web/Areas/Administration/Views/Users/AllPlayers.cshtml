@@ -42,6 +42,7 @@
                                 <th scope="col" class="sort" data-sort="name">Name</th>
                                 <th scope="col" class="sort" data-sort="role">Role</th>
                                 <th scope="col" class="sort" data-sort="setRole">Set Role</th>
+                                <th scope="col" class="sort" data-sort="removeRole">Remove Role</th>
                             </tr>
                         </thead>
                         <tbody class="list">
@@ -99,10 +100,23 @@
                                             </a>
                                         </div>
                                     </th>
+                                    @if (user.AllUserRoles != string.Empty)
+                                    {
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <a asp-action="RemovePlayerRole" asp-controller="Users" asp-route-userId="@user.UserId">
+                                                    <div class="media-body">
+                                                        <span class="name mb-0 text-sm">Remove Role</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </th>
+                                    }
                                     <td>
                                     </td>
                                 </tr>
                             }
+
                     </table>
 
                     <!-- Card footer -->
