@@ -28,6 +28,11 @@
         {
             var gameEvent = this.eventService.EventDetails(eventId);
 
+            if (gameEvent == null)
+            {
+                return this.BadRequest();
+            }
+
             return this.View(gameEvent);
         }
 

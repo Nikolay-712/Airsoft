@@ -22,7 +22,12 @@
                 <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                     <!-- Nav items -->
                     <ul class="navbar-nav">
-
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
+                                <i class="fas fa-home text-orange"></i>
+                                <span class="nav-link-text">Home</span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Events" asp-action="CreateEvent">
                                 <i class="fas fa-bullhorn text-primary"></i>
@@ -33,6 +38,12 @@
                             <a class="nav-link" asp-controller="Users" asp-action="AllPlayers">
                                 <i class="far fa-address-card text-green"></i>
                                 <span class="nav-link-text">Users</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Statistics" asp-action="ScanBarCode">
+                                <i class="fas fa-barcode text-yellow"></i>
+                                <span class="nav-link-text">Scaner</span>
                             </a>
                         </li>
                     </ul>

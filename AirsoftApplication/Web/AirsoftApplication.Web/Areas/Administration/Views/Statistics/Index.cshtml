@@ -1,51 +1,130 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Statistics.StatisticViewModel
+@inject AirsoftApplication.Services.Data.Events.IEventService eventService
 
 @{
     ViewData["Title"] = "Event Control";
+    var gameEvent = this.eventService.UpcomingEvent();
 }
 
-<h1>Add Statistic</h1>
-
-<h4></h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control">
-                    @foreach (var user in Model.Users)
-                    {
-                        <option value="@user.UserId">@user.PlayerName</option>
-                    }
-                </select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Scaner</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboards</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Measurement</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-area="" asp-controller="Events" asp-action="Index" class="btn btn-sm btn-neutral">
+                        Upcomming Event
+                    </a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="GunEnergy" class="control-label"></label>
-                <input type="number" asp-for="GunEnergy" class="form-control" />
-                <span asp-validation-for="GunEnergy" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="hidden" asp-for="EventId" />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@if (gameEvent != null)
+{
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-xl-4 order-xl-2">
+                <div class="card card-profile">
+                    @if (Model.User.ProfileImageUrl != null)
+                    {
+                        <img src="@Model.User.ProfileImageUrl" style="height:300px" alt="Image placeholder" class="card-img-top">
+                    }
+                    else
+                    {
+                        <img src="~/Images/default-avatar.png" style="height:300px" alt="Image placeholder" class="card-img-top">
+                    }
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
 
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body pt-0">
+                        <div class="row">
+
+                        </div>
+                        <div class="text-center">
+                            <h5 class="h3">
+                                @Model.User.PlayerName<span class="font-weight-light"></span>
+                            </h5>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>@Model.User.AllUserRoles
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 order-xl-1">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Add Gun Information</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Index" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="GunId" class="control-label alert-heading"><strong>Gun</strong></label>
+                                <select asp-for="GunId" class="form-control  alert-heading">
+                                    <option value="">Choose a weapon</option>
+                                    @foreach (var gun in Model.User.Guns)
+                                    {
+                                        <option value="@gun.GunId">@gun.GunType - @gun.Manufacture</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="GunId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="GunEnergy" class="control-label alert-heading"><strong>Gun Energy</strong></label>
+                                <input asp-for="GunEnergy" class="form-control  alert-heading">
+                                <span asp-validation-for="GunEnergy" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" asp-for="UserId">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Set gun info" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
+else
+{
+<div class="col-md-10 offset-1 mt-3">
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">There are no events !</h4>
+        <p>Check the  <a asp-area="" asp-controller="Events" asp-action="NoEvents">Calendar</a> for an expected next event and more information.</p>
+       
+        <hr>
+        <p class="mb-0">Text messages are used for personal, family, business and social purposes. Governmental and non-governmental organizations use text messaging for communication between colleagues. In the 2010s, the sending of short informal messages became an accepted part of .</p>
+    </div>
+</div>
+}
+
+
+
 
 

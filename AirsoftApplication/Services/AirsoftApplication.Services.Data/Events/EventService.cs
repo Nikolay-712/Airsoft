@@ -142,7 +142,14 @@
 
         public IEnumerable<ImageViewModel> EventImages(string eventId)
         {
-            var images = this.AllEvents().FirstOrDefault(x => x.Id == eventId).Images;
+            var gameEvent = this.AllEvents().Where(x => x.Id == eventId).FirstOrDefault();
+            if (gameEvent == null)
+            {
+                return null;
+            }
+
+            var images = gameEvent.Images;
+
             return images;
         }
     }

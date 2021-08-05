@@ -5,7 +5,7 @@
         <div class="header-body">
             <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <h6 class="h2 text-white d-inline-block mb-0">Roles</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
@@ -16,7 +16,6 @@
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a asp-controller="Dashboard" asp-action="CreateRole" class="btn btn-sm btn-neutral">New Role</a>
                     <a asp-controller="users" asp-action="AllPlayers" class="btn btn-sm btn-neutral">
                         Users
                     </a>
@@ -32,11 +31,11 @@
             <div class="card card-profile">
                 @if (Model.ProfileImage != null)
                 {
-                    <img src="@Model.ProfileImage" alt="Image placeholder" class="card-img-top">
+                    <img src="@Model.ProfileImage" style="height:300px" alt="Image placeholder" class="card-img-top">
                 }
                 else
                 {
-                    <img src="~/Images/default-avatar.png" alt="Image placeholder" class="card-img-top">
+                    <img src="~/Images/default-avatar.png" style="height:300px" alt="Image placeholder" class="card-img-top">
                 }
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
@@ -66,7 +65,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Create Application role </h3>
+                            <h3 class="mb-0">Set Application role</h3>
                         </div>
                     </div>
                 </div>
@@ -74,10 +73,11 @@
                     <form asp-action="SetPlayerRole" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="RoleName" class="control-label alert-heading"><strong>Set user role</strong></label>
+                            <label asp-for="RoleName" class="control-label alert-heading"><strong></strong></label>
                             <select asp-for="RoleName" class="form-control  alert-heading">
                                 @if (Model.ApplicationRoles.Count() > 0)
                                 {
+                                    <option value="">choose a role </option>
                                     @foreach (var role in Model.ApplicationRoles)
                                     {
                                         <option value="@role.Name">@role.Name</option>

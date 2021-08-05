@@ -5,21 +5,18 @@
         <div class="header-body">
             <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <h6 class="h2 text-white d-inline-block mb-0">Roles</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboards</a></li>
                             <li class="breadcrumb-item"><a asp-action="AllPlayers">Players</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Set Role</li>
+                            <li class="breadcrumb-item active" aria-current="page">Remove</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a asp-controller="Dashboard" asp-action="CreateRole" class="btn btn-sm btn-neutral">New Role</a>
-                    <a asp-controller="users" asp-action="AllPlayers" class="btn btn-sm btn-neutral">
-                        Users
-                    </a>
+                    <a asp-controller="users" asp-action="AllPlayers" class="btn btn-sm btn-neutral">Users</a>
                 </div>
             </div>
         </div>
@@ -30,7 +27,14 @@
     <div class="row">
         <div class="col-xl-4 order-xl-2">
             <div class="card card-profile">
-                <img src="~/Images/default-avatar.png" alt="Image placeholder" class="card-img-top">
+                @if (Model.ProfileImage != null)
+                {
+                    <img src="@Model.ProfileImage" style="height:300px" alt="Image placeholder" class="card-img-top">
+                }
+                else
+                {
+                    <img src="~/Images/default-avatar.png" style="height:300px" alt="Image placeholder" class="card-img-top">
+                }
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
@@ -59,23 +63,24 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Create Application role </h3>
+                            <h3 class="mb-0">Remove User Role </h3>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <form asp-action="RemovePlayerRole" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group">
-                                <label asp-for="RoleName" class="control-label alert-heading"><strong>Remove user role</strong></label>
-                                <select asp-for="RoleName" class="form-control  alert-heading">
-                                    @foreach (var role in Model.CurrentRoles.Split("/"))
-                                    {
-                                        <option value="@role">@role</option>
-                                    }
-                                </select>
-                                <span asp-validation-for="RoleName" class="text-danger"></span>
-                            </div>
+                        <div class="form-group">
+                            <label asp-for="RoleName" class="control-label alert-heading"><strong></strong></label>
+                            <select asp-for="RoleName" class="form-control  alert-heading">
+                                <option value="">choose a role </option>
+                                @foreach (var role in Model.CurrentRoles.Split("/"))
+                                {
+                                    <option value="@role">@role</option>
+                                }
+                            </select>
+                            <span asp-validation-for="RoleName" class="text-danger"></span>
+                        </div>
                         <div form-group>
                             <input type="hidden" asp-for="UserId" />
                         </div>

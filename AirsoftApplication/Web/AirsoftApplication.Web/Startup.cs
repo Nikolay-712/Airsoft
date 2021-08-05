@@ -8,6 +8,7 @@
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Data.Repositories;
+    using AirsoftApplication.Services.Data.BarCode;
     using AirsoftApplication.Services.Data.Comments;
     using AirsoftApplication.Services.Data.Contacts;
     using AirsoftApplication.Services.Data.Events;
@@ -93,6 +94,7 @@
             services.AddTransient<IAdministrationServive, AdministrationService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IVoteService, VoteService>();
+            services.AddTransient<IBarCodeService, BarCodeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

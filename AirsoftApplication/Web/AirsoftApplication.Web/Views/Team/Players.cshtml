@@ -4,24 +4,46 @@
 @{
     ViewData["Title"] = "Players";
 }
-<div class="photo-gallery">
-    <div class="container">
-        <div class="intro">
-            <h2 class="text-center">Players</h2>
-            <p class="text-center">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae. </p>
-        </div>
 
-        <div class="row">
-            @foreach (var player in Model)
+<br/>
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+    <div class="col-xl-4 order-xl-2">
+        <div class="card card-profile">
+            @if (item.ProfileImageUrl != null)
             {
-                <div class="col-md-4">
-                    <img src="@player.ProfileImageUrl" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                </div>
+                <img src="@item.ProfileImageUrl" alt="Image placeholder" style="height:370px" class="card-img-top">
             }
+            else
+            {
+                <img src="~/Images/default-avatar.png" alt="Image placeholder" style="height: 370px" class="card-img-top">
+            }
+            <div class="row justify-content-center mb-2">
+                <div class="col-lg-3 order-lg-2">
+                    <div class="card-profile-image">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+
+                </div>
+                <div class="text-center">
+                    <h5 class="h3">
+                        @item.PlayerName<span class="font-weight-light"></span>
+                    </h5>
+                    <div class="h5 font-weight-300">
+                        <i class="ni location_pin mr-2"></i>@item.AllUserRoles
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
+    }
 </div>
-
-
 

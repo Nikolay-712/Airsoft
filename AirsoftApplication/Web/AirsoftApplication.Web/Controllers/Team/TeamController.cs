@@ -37,6 +37,11 @@
             }
 
             var images = this.teamService.EventImages(eventId);
+            if (images == null)
+            {
+                return this.BadRequest();
+            }
+
             return this.View(images);
         }
     }

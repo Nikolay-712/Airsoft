@@ -8,11 +8,18 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="`\**" />
+    <EmbeddedResource Remove="`\**" />
+    <None Remove="`\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BarCode" Version="2021.8.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.52.0" />
     <PackageReference Include="Google.Cloud.Storage.V1" Version="3.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />

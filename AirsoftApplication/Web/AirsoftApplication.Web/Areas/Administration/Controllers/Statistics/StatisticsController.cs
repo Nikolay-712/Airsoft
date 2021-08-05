@@ -2,37 +2,52 @@
 {
     using System.Threading.Tasks;
 
+    using AirsoftApplication.Services.Data.BarCode;
     using AirsoftApplication.Services.Data.Statistics;
-    using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Web.ViewModels.Administration.Statistics;
     using Microsoft.AspNetCore.Mvc;
 
     public class StatisticsController : AdministrationController
     {
         private readonly IStatisticService statisticService;
-        private readonly IUserService userService;
+        private readonly IBarCodeService barcodeService;
 
-        public StatisticsController(IStatisticService statisticService, IUserService userService)
+        public StatisticsController(IStatisticService statisticService, IBarCodeService barcodeService)
         {
             this.statisticService = statisticService;
-            this.userService = userService;
+            this.barcodeService = barcodeService;
         }
 
-        public IActionResult Index(string eventId)
+        public IActionResult ScanBarCode()
         {
-            var statisticModel = new StatisticViewModel
-            {
-                Users = this.userService.GetAllUsers(),
-            };
+            var userId = this.barcodeService.ReadingBarCode("497e4219-58f0-43cb-8b79-ec070516c81a");
 
-            return this.View(statisticModel);
+            if (userId == string.Empty)
+            {
+                return this.View("ScanBarCodeError");
+            }
+
+            return this.RedirectToAction("Index", new { userId = userId });
+        }
+
+        public IActionResult Index(string userId)
+        {
+            var statisticInfo = this.statisticService.GetUserInfo(userId);
+            return this.View(statisticInfo);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(StatisticViewModel model)
+        public async Task<IActionResult> Index(string userId, StatisticViewModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var statisticInfo = this.statisticService.GetUserInfo(userId);
+                return this.View(statisticInfo);
+            }
+
             await this.statisticService.CreateStatisticAsync(model);
-            return this.View();
+
+            return this.RedirectToAction("ScanBarCode");
         }
     }
 }

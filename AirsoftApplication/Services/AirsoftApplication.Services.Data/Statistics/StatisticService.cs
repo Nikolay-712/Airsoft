@@ -5,47 +5,66 @@
 
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Statistics;
+    using AirsoftApplication.Services.Data.Events;
+    using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Web.ViewModels.Administration.Statistics;
 
     public class StatisticService : IStatisticService
     {
         private readonly IDeletableEntityRepository<Statistic> statisticyRepository;
         private readonly IDeletableEntityRepository<StatisticInfo> infoRepository;
+        private readonly IUserService userService;
+        private readonly IEventService eventService;
 
         public StatisticService(
             IDeletableEntityRepository<Statistic> statisticyRepository,
-            IDeletableEntityRepository<StatisticInfo> infoRepository)
+            IDeletableEntityRepository<StatisticInfo> infoRepository,
+            IUserService userService,
+            IEventService eventService)
         {
             this.statisticyRepository = statisticyRepository;
             this.infoRepository = infoRepository;
+            this.userService = userService;
+            this.eventService = eventService;
+        }
+
+        public StatisticViewModel GetUserInfo(string userId)
+        {
+            var user = this.userService.GetUserById(userId);
+
+            var statistic = new StatisticViewModel
+            {
+                User = user,
+            };
+
+            return statistic;
         }
 
         public async Task CreateStatisticAsync(StatisticViewModel model)
         {
-            var exists = this.statisticyRepository.All()
-                .Any(x => x.EventId == model.EventId && x.UserId == model.UserId);
+            var gameevent = this.eventService.UpcomingEvent();
+            var statisticId = string.Empty;
 
-            string statisticId = string.Empty;
+            var existingStatistic = this.statisticyRepository.All()
+                .Where(x => x.EventId == gameevent.Id && x.UserId == model.UserId)
+                .FirstOrDefault();
 
-            if (!exists)
+            if (existingStatistic == null)
             {
                 var statistic = new Statistic
                 {
                     UserId = model.UserId,
-                    EventId = model.EventId,
+                    EventId = gameevent.Id,
                 };
 
-                //await this.statisticyRepository.AddAsync(statistic);
-                //await this.statisticyRepository.SaveChangesAsync();
-
                 statisticId = statistic.Id;
-            }
 
-            if (string.IsNullOrEmpty(statisticId))
+                await this.statisticyRepository.AddAsync(statistic);
+                await this.statisticyRepository.SaveChangesAsync();
+            }
+            else
             {
-                statisticId = this.statisticyRepository.All()
-                     .Where(x => x.EventId == model.EventId && x.UserId == model.UserId)
-                     .Select(x => x.Id).FirstOrDefault();
+                statisticId = existingStatistic.Id;
             }
 
             var statisticInfo = new StatisticInfo
@@ -55,8 +74,8 @@
                 GunEnergy = model.GunEnergy,
             };
 
-            //await this.infoRepository.AddAsync(statisticInfo);
-            //await this.infoRepository.SaveChangesAsync();
+            await this.infoRepository.AddAsync(statisticInfo);
+            await this.infoRepository.SaveChangesAsync();
         }
     }
 }
