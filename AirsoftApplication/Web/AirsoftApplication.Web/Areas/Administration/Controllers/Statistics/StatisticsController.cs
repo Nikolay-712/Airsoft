@@ -20,7 +20,7 @@
 
         public IActionResult ScanBarCode()
         {
-            var userId = this.barcodeService.ReadingBarCode("497e4219-58f0-43cb-8b79-ec070516c81a");
+            var userId = this.barcodeService.ReadingBarCode("29011e3c-99d8-404e-9bd8-54c9df73a00f");
 
             if (userId == string.Empty)
             {

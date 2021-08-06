@@ -15,6 +15,7 @@
     using AirsoftApplication.Web.ViewModels.Administration.Events;
     using AirsoftApplication.Web.ViewModels.Events;
     using AirsoftApplication.Web.ViewModels.Images;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class EventService : IEventService
     {
@@ -23,32 +24,42 @@
         private readonly IImageService imageService;
         private readonly ICommentService commentService;
         private readonly IVoteService voteService;
+        private readonly IMemoryCache memoryCache;
 
         public EventService(
             IDeletableEntityRepository<Battlefield> fieldRepository,
             IDeletableEntityRepository<Event> eventRepository,
             IImageService imageService,
             ICommentService commentService,
-            IVoteService voteService)
+            IVoteService voteService,
+            IMemoryCache memoryCache)
         {
             this.fieldRepository = fieldRepository;
             this.eventRepository = eventRepository;
             this.imageService = imageService;
             this.commentService = commentService;
             this.voteService = voteService;
+            this.memoryCache = memoryCache;
         }
 
         public IEnumerable<FieldViewModel> GetTeamFields()
         {
-            var teamFields = this.fieldRepository.All()
-                  .Select(x => new FieldViewModel
-                  {
-                      FieldId = x.Id,
-                      Name = x.Name,
-                      Description = x.Description,
-                      CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
-                      Location = x.Location,
-                  }).ToList();
+            var teamFields = this.memoryCache.Get<IEnumerable<FieldViewModel>>(GlobalConstants.FieldCachKey);
+
+            teamFields = this.fieldRepository.All()
+                 .Select(x => new FieldViewModel
+                 {
+                     FieldId = x.Id,
+                     Name = x.Name,
+                     Description = x.Description,
+                     CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                     Location = x.Location,
+                 }).ToList();
+
+            var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+
+            this.memoryCache.Set(GlobalConstants.FieldCachKey, teamFields, cacheOptions);
 
             return teamFields;
         }
@@ -97,7 +108,9 @@
 
         public IEnumerable<EventViewModel> AllEvents()
         {
-            var events = this.eventRepository.All().Select(x => new EventViewModel
+            var events = this.memoryCache.Get<IEnumerable<EventViewModel>>(GlobalConstants.EventsCacheKey);
+
+            events = this.eventRepository.All().Select(x => new EventViewModel
             {
                 Id = x.Id,
                 Images = this.imageService.GetAllImages(x.Id),
@@ -113,6 +126,11 @@
                     Images = this.imageService.GetAllImages(x.FieldId),
                 },
             }).ToList();
+
+            var cacheOptions = new MemoryCacheEntryOptions()
+                   .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+
+            this.memoryCache.Set(GlobalConstants.EventsCacheKey, events, cacheOptions);
 
             return events;
         }

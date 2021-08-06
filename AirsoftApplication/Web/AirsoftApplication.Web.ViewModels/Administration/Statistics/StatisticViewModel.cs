@@ -1,7 +1,7 @@
 ﻿namespace AirsoftApplication.Web.ViewModels.Administration.Statistics
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using AirsoftApplication.Web.ViewModels.Users;
 
     public class StatisticViewModel

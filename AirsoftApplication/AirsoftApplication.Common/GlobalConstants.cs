@@ -4,6 +4,14 @@
     {
         public const string SystemName = "AirsoftApplication";
 
+        public const string EventsCacheKey = nameof(EventsCacheKey);
+        public const string FieldCachKey = nameof(FieldCachKey);
+
+        public const string AdministrationCacheKey = nameof(AdministrationCacheKey);
+
+        public const string UsersCacheKey = nameof(UsersCacheKey);
+        public const string MessageCachKey = nameof(MessageCachKey);
+
         public const int ManufactureMinLenght = 3;
         public const int ManufactureMaxLenght = 100;
 

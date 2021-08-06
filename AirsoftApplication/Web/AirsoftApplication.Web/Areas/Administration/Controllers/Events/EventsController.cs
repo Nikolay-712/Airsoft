@@ -30,7 +30,7 @@
 
             await this.eventService.CreateEventAsync(input);
 
-            return this.View(); ////Redirect.....
+            return this.RedirectToAction("Index", "Events", new { Area = string.Empty });
         }
 
         public IActionResult CreateField()

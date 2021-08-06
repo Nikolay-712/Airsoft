@@ -1,5 +1,6 @@
 ﻿namespace AirsoftApplication.Services.Data.Users
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -15,45 +16,56 @@
     using AirsoftApplication.Web.ViewModels.Images;
     using AirsoftApplication.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class UserService : IUserService
     {
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IImageService imageService;
         private readonly IRoleService roleService;
+        private readonly IMemoryCache memoryCache;
         private readonly RoleManager<ApplicationRole> roleManager;
 
         public UserService(
             IDeletableEntityRepository<ApplicationUser> userRepository,
             IImageService imageService,
             IRoleService roleService,
+            IMemoryCache memoryCache,
             RoleManager<ApplicationRole> roleManager)
         {
             this.userRepository = userRepository;
             this.imageService = imageService;
             this.roleService = roleService;
+            this.memoryCache = memoryCache;
             this.roleManager = roleManager;
         }
 
         public IEnumerable<UserViewModel> GetAllUsers()
         {
-            var users = this.userRepository.All()
-                .Select(user => new UserViewModel
-                {
-                    UserId = user.Id,
-                    PlayerName = user.PlayerName,
-                    CreatedOn = user.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
-                    Roles = user.Roles.Select(x => x.RoleId),
-                    ProfileImageUrl = this.imageService.GetProfileImageUrl(user.Id),
-                    Guns = user.Guns.Select(gun => new GunViewModel
-                    {
-                        GunId = gun.Id,
-                        GunType = gun.GunType.ToString(),
-                        Manufacture = gun.Manufacture,
-                    }),
-                }).ToList();
+            var users = this.memoryCache.Get<IEnumerable<UserViewModel>>(GlobalConstants.UsersCacheKey);
+
+            users = this.userRepository.All()
+               .Select(user => new UserViewModel
+               {
+                   UserId = user.Id,
+                   PlayerName = user.PlayerName,
+                   CreatedOn = user.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                   Roles = user.Roles.Select(x => x.RoleId),
+                   ProfileImageUrl = this.imageService.GetProfileImageUrl(user.Id),
+                   Guns = user.Guns.Select(gun => new GunViewModel
+                   {
+                       GunId = gun.Id,
+                       GunType = gun.GunType.ToString(),
+                       Manufacture = gun.Manufacture,
+                   }),
+               }).ToList();
 
             this.UserRolesToString(users);
+
+            var cacheOptions = new MemoryCacheEntryOptions()
+                   .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+
+            this.memoryCache.Set(GlobalConstants.UsersCacheKey, users, cacheOptions);
 
             return users;
         }

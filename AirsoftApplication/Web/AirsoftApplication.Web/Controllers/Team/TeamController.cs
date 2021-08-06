@@ -14,19 +14,14 @@
 
         public IActionResult Index()
         {
-            return this.View();
+            var players = this.teamService.TeamList();
+            return this.View(players);
         }
 
         public IActionResult Events()
         {
             var events = this.teamService.AllEvents();
             return this.View(events);
-        }
-
-        public IActionResult Players()
-        {
-            var players = this.teamService.TeamList();
-            return this.View(players);
         }
 
         public IActionResult Gallery(string eventId)

@@ -1,5 +1,6 @@
 ﻿namespace AirsoftApplication.Services.Data.Contacts
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,16 +11,22 @@
     using AirsoftApplication.Services.Messaging;
     using AirsoftApplication.Web.ViewModels.Administration.Contacts;
     using AirsoftApplication.Web.ViewModels.Contacts;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class ContactService : IContactService
     {
         private readonly IDeletableEntityRepository<Message> messageRepository;
         private readonly IEmailSender emailSender;
+        private readonly IMemoryCache memoryCache;
 
-        public ContactService(IDeletableEntityRepository<Message> messageRepository, IEmailSender emailSender)
+        public ContactService(
+            IDeletableEntityRepository<Message> messageRepository,
+            IEmailSender emailSender,
+            IMemoryCache memoryCache)
         {
             this.messageRepository = messageRepository;
             this.emailSender = emailSender;
+            this.memoryCache = memoryCache;
         }
 
         public async Task SendMessageAsync(InputMessageViewModel input)
@@ -39,19 +46,26 @@
 
         public IEnumerable<MessageViewModel> AllMessages()
         {
-            var messges = this.messageRepository.All()
-                .Select(x => new MessageViewModel
-                {
-                    Id = x.Id,
-                    Username = x.Username,
-                    Email = x.Email,
-                    Subject = x.Subject,
-                    Content = x.Content,
-                    CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
-                    HasBeenRead = x.HasBeenRead,
-                })
-                .OrderBy(x => x.HasBeenRead)
-                .ToList();
+            var messges = this.memoryCache.Get<IEnumerable<MessageViewModel>>(GlobalConstants.MessageCachKey);
+
+            messges = this.messageRepository.All()
+               .Select(x => new MessageViewModel
+               {
+                   Id = x.Id,
+                   Username = x.Username,
+                   Email = x.Email,
+                   Subject = x.Subject,
+                   Content = x.Content,
+                   CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                   HasBeenRead = x.HasBeenRead,
+               })
+               .OrderBy(x => x.HasBeenRead)
+               .ToList();
+
+            var cacheOptions = new MemoryCacheEntryOptions()
+                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+            this.memoryCache.Set(GlobalConstants.MessageCachKey, messges, cacheOptions);
 
             return messges;
         }

@@ -36,7 +36,9 @@
         {
             var players = this.userService
                 .GetAllUsers()
-                .Where(x => x.AllUserRoles.Contains(GlobalConstants.ApplicationRole.SoldierRoleName)).ToList();
+                .Where(x => x.AllUserRoles
+                .Contains(GlobalConstants.ApplicationRole.SoldierRoleName))
+                .ToList();
 
             return players;
         }
