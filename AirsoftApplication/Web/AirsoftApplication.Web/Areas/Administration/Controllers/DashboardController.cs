@@ -1,9 +1,10 @@
 ﻿namespace AirsoftApplication.Web.Areas.Administration.Controllers
 {
-    using System.Threading.Tasks;
+    using System.Linq;
 
     using AirsoftApplication.Services.Data.Contacts;
     using AirsoftApplication.Services.Data.Statistics;
+    using AirsoftApplication.Web.ViewModels.Administration.Contacts;
     using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
@@ -25,10 +26,31 @@
             return this.View(statistic);
         }
 
-        public IActionResult AllMessages()
+        public IActionResult AllMessages(int page = 1)
         {
+            if (page <= 0)
+            {
+                return this.NotFound();
+            }
+
             var messages = this.contactService.AllMessages();
-            return this.View(messages);
+            var itemsPerpage = 5;
+
+            var allMessages = new AllMessagesViewModel
+            {
+                PageNumber = page,
+                ItemsPerPage = itemsPerpage,
+                ItemsCount = messages.Count(),
+                Messages = messages
+                .Skip((page - 1) * itemsPerpage).Take(itemsPerpage),
+            };
+
+            if (page > allMessages.PagesCount)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(allMessages);
         }
 
         public IActionResult MessageById(string messageId)
