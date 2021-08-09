@@ -1,6 +1,6 @@
-﻿@model AirsoftApplication.Web.ViewModels.Events.EventDeteilsViewModel
+﻿@model EventDeteilsViewModel
 @using AirsoftApplication.Common
-@inject Microsoft.AspNetCore.Identity.UserManager<AirsoftApplication.Data.Models.Users.ApplicationUser> UserManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     var user = await this.UserManager.GetUserAsync(this.User);
@@ -100,9 +100,10 @@
             <hr />
             <div class="tab-content" id="advancedTabContent">
                 <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-                    <partial name="_CommentPartial" model="@Model" />
+                        <partial name="_CommentPartial" model="@Model" />
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
+

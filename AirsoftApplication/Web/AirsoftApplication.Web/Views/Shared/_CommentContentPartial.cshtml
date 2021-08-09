@@ -1,7 +1,9 @@
-﻿@model AirsoftApplication.Web.ViewModels.Comments.CommentViewModel
+﻿@model IEnumerable<CommentViewModel>
 
+<a href="#" class="show_hide">show/hide (@Model.Count())</a>
+<div class="slidingDiv">
 
-    @foreach (var subComment in Model.SubComments)
+    @foreach (var subComment in Model)
     {
         <div class="media mt-3 mb-4">
             @if (subComment.UserId != null && subComment.ProfileImageUrl != null)
@@ -30,5 +32,24 @@
             </div>
             <hr />
         </div>
+
     }
+
+</div>
+
+<section Scipts>
+    <script>
+        type = "text/javascript" >
+            $(document).ready(function () {
+                $(".slidingDiv").hide();
+                $(".show_hide").show();
+                $('.show_hide').click(function () {
+                    $(".slidingDiv").slideToggle();
+                });
+
+            });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+</section>
+
 

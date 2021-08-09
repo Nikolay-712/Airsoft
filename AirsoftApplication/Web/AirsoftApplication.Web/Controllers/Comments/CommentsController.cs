@@ -52,11 +52,6 @@
                 return this.View();
             }
 
-            if (input.EventId == null)
-            {
-                return this.RedirectToAction("Events", "Team");
-            }
-
             await this.commentService.AddSubCommentAsync(ClaimsPrincipalExtensions.Id(this.User), input);
 
             return this.RedirectToAction("EventDetails", "Events", new { eventId = input.EventId });

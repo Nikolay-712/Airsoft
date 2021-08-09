@@ -39,25 +39,28 @@
             var statistic = this.memoryCache
                 .Get<AdministrationStatisticViewModel>(GlobalConstants.AdministrationCacheKey);
 
-            statistic = new AdministrationStatisticViewModel
+            if (statistic == null)
             {
-                RegisteredUsers = this.users.All().ToList().Count(),
-                OrganizedEvents = this.events.All().ToList().Count(),
-                UsersInTeamRole = this.users.All()
-                   .Where(x => x.Roles.Count > 0)
-                   .Count(),
-                UnreadMessages = this.messges.All()
-                   .Where(x => x.HasBeenRead == false)
-                   .ToList().Count(),
-                Events = this.teamService.MostRatedEvents()
-                   .OrderByDescending(x => x.Vote.PositiveVotes)
-                   .Take(3),
-            };
+                statistic = new AdministrationStatisticViewModel
+                {
+                    RegisteredUsers = this.users.All().ToList().Count(),
+                    OrganizedEvents = this.events.All().ToList().Count(),
+                    UsersInTeamRole = this.users.All()
+                  .Where(x => x.Roles.Count > 0)
+                  .Count(),
+                    UnreadMessages = this.messges.All()
+                  .Where(x => x.HasBeenRead == false)
+                  .ToList().Count(),
+                    Events = this.teamService.MostRatedEvents()
+                  .OrderByDescending(x => x.Vote.PositiveVotes)
+                  .Take(3),
+                };
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+                var cacheOptions = new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-            this.memoryCache.Set(GlobalConstants.AdministrationCacheKey, statistic, cacheOptions);
+                this.memoryCache.Set(GlobalConstants.AdministrationCacheKey, statistic, cacheOptions);
+            }
 
             return statistic;
         }

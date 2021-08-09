@@ -42,7 +42,8 @@
                 ItemsPerPage = itemsPerpage,
                 ItemsCount = messages.Count(),
                 Messages = messages
-                .Skip((page - 1) * itemsPerpage).Take(itemsPerpage),
+                    .Skip((page - 1) * itemsPerpage)
+                    .Take(itemsPerpage),
             };
 
             if (page > allMessages.PagesCount)
@@ -50,6 +51,8 @@
                 return this.NotFound();
             }
 
+            string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            this.ViewData["Actionname"] = actionName;
             return this.View(allMessages);
         }
 

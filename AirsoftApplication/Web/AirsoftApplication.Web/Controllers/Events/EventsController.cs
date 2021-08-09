@@ -1,10 +1,14 @@
 ﻿namespace AirsoftApplication.Web.Controllers.Events
 {
+    using System.Linq;
+
     using AirsoftApplication.Services.Data.Events;
     using Microsoft.AspNetCore.Mvc;
 
     public class EventsController : Controller
     {
+        private const int CommentsPerPage = 2;
+
         private readonly IEventService eventService;
 
         public EventsController(IEventService eventService)
@@ -24,13 +28,24 @@
             return this.View(gameEvent);
         }
 
-        public IActionResult EventDetails(string eventId)
+        public IActionResult EventDetails(string eventId, int page = 1)
         {
+            if (page <= 0)
+            {
+                return this.NotFound();
+            }
+
             var gameEvent = this.eventService.EventDetails(eventId);
 
-            if (gameEvent == null)
+            gameEvent.PageNumber = page;
+            gameEvent.ItemsCount = gameEvent.CommentsCount;
+            gameEvent.ItemsPerPage = CommentsPerPage;
+            gameEvent.Comments = gameEvent.Comments.Skip((page - 1) * CommentsPerPage)
+                      .Take(CommentsPerPage);
+
+            if (page > gameEvent.PagesCount)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
 
             return this.View(gameEvent);

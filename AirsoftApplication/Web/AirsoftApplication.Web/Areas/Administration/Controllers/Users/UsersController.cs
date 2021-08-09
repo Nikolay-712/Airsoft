@@ -1,14 +1,18 @@
 ﻿namespace AirsoftApplication.Web.Areas.Administration.Controllers.Users
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using AirsoftApplication.Services.Data.Roles;
     using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Web.ViewModels.Administration.Users;
+    using AirsoftApplication.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Mvc;
 
     public class UsersController : AdministrationController
     {
+        private const int UsersPerPage = 10;
+
         private readonly IUserService userService;
         private readonly IRoleService roleService;
 
@@ -18,10 +22,33 @@
             this.roleService = roleService;
         }
 
-        public IActionResult AllPlayers()
+        public IActionResult AllPlayers(int page = 1)
         {
+            if (page <= 0)
+            {
+                return this.NotFound();
+            }
+
             var players = this.userService.GetAllUsers();
-            return this.View(players);
+
+            var allPlayers = new AllUsersViewModel
+            {
+                ItemsPerPage = UsersPerPage,
+                ItemsCount = players.Count(),
+                PageNumber = page,
+                Players = players
+                    .Skip((page - 1) * UsersPerPage)
+                    .Take(UsersPerPage),
+            };
+
+            if (page > allPlayers.PagesCount)
+            {
+                return this.NotFound();
+            }
+
+            string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            this.ViewData["Actionname"] = actionName;
+            return this.View(allPlayers);
         }
 
         public IActionResult SetPlayerRole(string userId)

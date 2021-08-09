@@ -7,7 +7,7 @@
     using AirsoftApplication.Web.ViewModels.Images;
     using AirsoftApplication.Web.ViewModels.Vote;
 
-    public class EventDeteilsViewModel
+    public class EventDeteilsViewModel : PagingViewModel
     {
         public string Id { get; set; }
 
