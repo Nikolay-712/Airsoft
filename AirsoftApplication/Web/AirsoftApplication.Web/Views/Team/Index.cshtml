@@ -1,9 +1,14 @@
 ﻿@model IEnumerable<AirsoftApplication.Web.ViewModels.Users.UserViewModel>
+@using AirsoftApplication.Common
 
-<h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/<a asp-controller="Team" asp-action="Index" class="link-primary">Team</a>/Players</h4>
+<h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Players</h4>
 @{
     ViewData["Title"] = "Players";
 }
+
+<div class="intro">
+    <h2 class="text-center">@GlobalConstants.Team.Name</h2>
+</div>
 
 <br />
 
@@ -11,15 +16,15 @@
 
     @foreach (var item in Model)
     {
-        <div class="col-xl-4 order-xl-2">
+        <div class="col-md-3 order-xl-2 mb-3">
             <div class="card card-profile">
                 @if (item.ProfileImageUrl != null)
                 {
-                    <img src="@item.ProfileImageUrl" alt="Image placeholder" style="height:370px" class="card-img-top">
+                    <img src="@item.ProfileImageUrl" alt="Image placeholder" style="height:320px" class="card-img-top">
                 }
                 else
                 {
-                    <img src="~/Images/default-avatar.png" alt="Image placeholder" style="height: 370px" class="card-img-top">
+                    <img src="~/Images/default-avatar.png" alt="Image placeholder" style="height: 320px" class="card-img-top">
                 }
                 <div class="row justify-content-center mb-2">
                     <div class="col-lg-3 order-lg-2">
@@ -31,12 +36,12 @@
 
                 <div class="card-body pt-0">
                     <div class="row">
-
                     </div>
                     <div class="text-center">
-                        <h5 class="h3">
-                            @item.PlayerName<span class="font-weight-light"></span>
-                        </h5>
+                        <h6>
+                            <strong>@item.PlayerName<span class="font-weight-light"></span></strong> 
+                        </h6>
+                        <hr />
                         <div class="h5 font-weight-300">
                             <i class="ni location_pin mr-2"></i>@item.AllUserRoles
                         </div>

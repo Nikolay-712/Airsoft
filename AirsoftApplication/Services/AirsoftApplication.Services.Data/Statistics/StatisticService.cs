@@ -1,8 +1,10 @@
 ﻿namespace AirsoftApplication.Services.Data.Statistics
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AirsoftApplication.Common;
     using AirsoftApplication.Data.Common.Repositories;
     using AirsoftApplication.Data.Models.Statistics;
     using AirsoftApplication.Services.Data.Events;
@@ -38,6 +40,24 @@
             };
 
             return statistic;
+        }
+
+        public IEnumerable<StatisticInfoViewModel> GetUserStatistic(string userId)
+        {
+            var userStatistic = this.statisticyRepository.All()
+                .Where(x => x.UserId == userId)
+                .Select(s => new StatisticInfoViewModel
+                {
+                    EventName = s.Event.Name,
+                    Date = s.Event.Date.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                    Info = s.Info.Select(i => new InfoViewModel
+                    {
+                        Gun = i.Gun.GunType.ToString() + " - " + i.Gun.Manufacture,
+                        GunEnergy = i.GunEnergy,
+                    }),
+                }).ToList();
+
+            return userStatistic;
         }
 
         public async Task CreateStatisticAsync(StatisticViewModel model)

@@ -46,20 +46,23 @@
         {
             var teamFields = this.memoryCache.Get<IEnumerable<FieldViewModel>>(GlobalConstants.FieldCachKey);
 
-            teamFields = this.fieldRepository.All()
-                 .Select(x => new FieldViewModel
-                 {
-                     FieldId = x.Id,
-                     Name = x.Name,
-                     Description = x.Description,
-                     CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
-                     Location = x.Location,
-                 }).ToList();
+            if (teamFields == null)
+            {
+                teamFields = this.fieldRepository.All()
+                .Select(x => new FieldViewModel
+                {
+                    FieldId = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                    Location = x.Location,
+                }).ToList();
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+                var cacheOptions = new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromDays(1));
 
-            this.memoryCache.Set(GlobalConstants.FieldCachKey, teamFields, cacheOptions);
+                this.memoryCache.Set(GlobalConstants.FieldCachKey, teamFields, cacheOptions);
+            }
 
             return teamFields;
         }
@@ -110,27 +113,30 @@
         {
             var events = this.memoryCache.Get<IEnumerable<EventViewModel>>(GlobalConstants.EventsCacheKey);
 
-            events = this.eventRepository.All().Select(x => new EventViewModel
+            if (events == null)
             {
-                Id = x.Id,
-                Images = this.imageService.GetAllImages(x.Id),
-                Date = x.Date.ToString(GlobalConstants.DateTimeFormat.DateFormat),
-                Time = x.Time.ToString(GlobalConstants.DateTimeFormat.TimeFormat),
-                Name = x.Name,
-                Description = x.Description,
-                Battlefield = new FieldViewModel
+                events = this.eventRepository.All().Select(x => new EventViewModel
                 {
-                    Name = x.Field.Name,
-                    Description = x.Field.Description,
-                    Location = x.Field.Location,
-                    Images = this.imageService.GetAllImages(x.FieldId),
-                },
-            }).ToList();
+                    Id = x.Id,
+                    Images = this.imageService.GetAllImages(x.Id),
+                    Date = x.Date.ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                    Time = x.Time.ToString(GlobalConstants.DateTimeFormat.TimeFormat),
+                    Name = x.Name,
+                    Description = x.Description,
+                    Battlefield = new FieldViewModel
+                    {
+                        Name = x.Field.Name,
+                        Description = x.Field.Description,
+                        Location = x.Field.Location,
+                        Images = this.imageService.GetAllImages(x.FieldId),
+                    },
+                }).ToList();
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                   .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+                var cacheOptions = new MemoryCacheEntryOptions()
+                       .SetAbsoluteExpiration(TimeSpan.FromDays(5));
 
-            this.memoryCache.Set(GlobalConstants.EventsCacheKey, events, cacheOptions);
+                this.memoryCache.Set(GlobalConstants.EventsCacheKey, events, cacheOptions);
+            }
 
             return events;
         }

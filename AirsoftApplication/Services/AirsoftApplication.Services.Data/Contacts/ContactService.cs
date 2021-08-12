@@ -48,7 +48,10 @@
         {
             var messges = this.memoryCache.Get<IEnumerable<MessageViewModel>>(GlobalConstants.MessageCachKey);
 
-            messges = this.messageRepository.All()
+            if (messges == null)
+            {
+                messges = this.messageRepository.All()
+               .OrderByDescending(x => x.CreatedOn)
                .Select(x => new MessageViewModel
                {
                    Id = x.Id,
@@ -59,13 +62,13 @@
                    CreatedOn = x.CreatedOn.ToString(GlobalConstants.DateTimeFormat.DateFormat),
                    HasBeenRead = x.HasBeenRead,
                })
-               .OrderBy(x => x.HasBeenRead)
                .ToList();
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+                var cacheOptions = new MemoryCacheEntryOptions()
+                       .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-            this.memoryCache.Set(GlobalConstants.MessageCachKey, messges, cacheOptions);
+                this.memoryCache.Set(GlobalConstants.MessageCachKey, messges, cacheOptions);
+            }
 
             return messges;
         }

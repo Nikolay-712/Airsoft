@@ -1,4 +1,9 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Dashboard.AdministrationStatisticViewModel
+@inject AirsoftApplication.Services.Data.Statistics.IAdministrationServive service
+
+@{
+    var statistics = service.GetPlayerStatistics();
+}
 
 <div class="header bg-primary pb-6">
     <div class="container-fluid">
@@ -15,7 +20,7 @@
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    
+
                     <a asp-controller="Dashboard" asp-action="AllMessages" class="btn btn-sm btn-neutral">
                         <i class="fas fa-bell">
                         </i> @Model.UnreadMessages Messages
@@ -171,6 +176,83 @@
                     }
                 </tbody>
             </table>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Team List</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="image">Image</th>
+                                <th scope="col" class="sort" data-sort="name">Name</th>
+                                <th scope="col" class="sort" data-sort="events">Visited Events</th>
+                                <th scope="col" class="sort" data-sort="events">Information</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @foreach (var user in statistics)
+                            {
+                                <tr>
+                                    @if (user.ProfileImageUrl != null)
+                                    {
+                                        <th scope="row">
+                                            <div class="media align-items-center border-radius: 50">
+                                                <a class="avatar rounded-circle mr-4">
+                                                    <img alt="Image placeholder" src="@user.ProfileImageUrl" width="30" height="50">
+                                                </a>
+                                            </div>
+                                        </th>
+                                    }
+                                    else
+                                    {
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <a class="avatar rounded-circle mr-3">
+                                                    <img alt="Image placeholder" src="~/Images/default-avatar.png" width="30" height="50">
+                                                </a>
+                                            </div>
+                                        </th>
+                                    }
+
+                                    <td scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">@user.Username</span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="completion mr-2">@user.StatisticInfos.Count()</span>
+                                            <div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: @user.StatisticInfos.Count()%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td scope="row">
+                                        <div class="media align-items-center">
+                                            <a asp-action="ShowStatisticInfo" asp-controller="Statistics" asp-route-userId="@user.UserId">
+                                                <i class="fas fa-info-circle fa-2x"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,63 @@
+﻿@using AirsoftApplication.Common
+
+<h4>
+    <a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/About Us
+</h4>
+
+@{
+    ViewData["Title"] = "About Us";
+}
+
+
+<div class="container">
+    <div class="row  mt-3">
+        <div class="col-md-4 text-center xs mb-2">
+            <hr />
+            <p>
+                Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or other type of compatible computer. Text messages may be sent over a cellular network, or may also be sent via an Internet connection.
+            </p>
+        </div>
+        <div class="col-md-4   text-center xs mb-2">
+            <hr />
+            <p>
+                Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or other type of compatible computer. Text messages may be sent over a cellular network, or may also be sent via an Internet connection.
+            </p>
+        </div>
+        <div class="col-md-4  text-center xs mb-2">
+            <hr />
+            <p>
+                Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or other type of compatible computer. Text messages may be sent over a cellular network, or may also be sent via an Internet connection.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 text-center">
+        
+        <hr />
+        <div>
+            <h5> <i class="fas fa-phone"></i> @GlobalConstants.Team.Phone </h5><br />
+            <h5> <i class="fas fa-at"></i> @GlobalConstants.Team.Email </h5><br />
+        </div>
+
+        <div class="buttonContainer text-center">
+            <a class="btn btn-default" type="button" href="#"><i class="fab fa-facebook-square fa-2x" style="color:dodgerblue"></i> </a>
+            <a class="btn btn-default" type="button" href="#"> <i class="fab fa-youtube fa-2x" style="color:red"></i> </a>
+            <a class="btn btn-default" type="button" href="#"><i class="fab fa-instagram fa-2x" style="color:hotpink"></i> </a>
+        </div>
+       
+        <div class="text-center mt-2">
+            <a class="btn btn-primary" asp-controller="Contacts" asp-action="Index">Send message </a>
+        </div>
+
+    </div>
+   
+    <div class="col-lg-6 right-image p-r-0">
+        <iframe src="@GlobalConstants.Team.GoogleLocation" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</div>
+
+
+

@@ -30,7 +30,8 @@
 
             await this.contactService.SendMessageAsync(input);
 
-            return this.View();
+            this.TempData["Sendmessage"] = "Thank for your message";
+            return this.Redirect("/");
         }
     }
 }

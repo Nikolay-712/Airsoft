@@ -49,5 +49,18 @@
 
             return this.RedirectToAction("ScanBarCode");
         }
+
+        public IActionResult ShowStatisticInfo(string userId)
+        {
+            var playerStatistic = this.statisticService
+                .GetUserStatistic(userId);
+
+            if (playerStatistic == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(playerStatistic);
+        }
     }
 }

@@ -40,6 +40,8 @@
         {
             public const string Email = "graoforce@abv.bg";
             public const string Name = "Graoforce Team";
+            public const string Phone = "+359 888800111";
+            public const string GoogleLocation = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d624.7952277044214!2d22.966514229205224!3d42.54866088669482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14aab7876e5480d1%3A0x370af8e15d58be0d!2sAirsoft%20team%20Graoforce!5e1!3m2!1sbg!2sbg!4v1626872026098!5m2!1sbg!2sbg";
         }
 
         public class Files

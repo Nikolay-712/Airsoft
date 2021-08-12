@@ -22,8 +22,7 @@
             barCode
                 .ResizeTo(300, 150)
                 .SetMargins(20)
-                .AddAnnotationTextAboveBarcode(barcodeText)
-                .AddBarcodeValueTextBelowBarcode();
+                .AddAnnotationTextAboveBarcode(barcodeText);
             barCode.ChangeBackgroundColor(Color.LightGoldenrodYellow);
 
             barCode.SaveAsJpeg(FoldierDirectory + userId + ImageFormat);

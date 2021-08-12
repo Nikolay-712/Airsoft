@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using AirsoftApplication.Web.ViewModels.Administration.Users;
     using AirsoftApplication.Web.ViewModels.Events;
     using AirsoftApplication.Web.ViewModels.Images;
     using AirsoftApplication.Web.ViewModels.Users;
@@ -9,6 +10,8 @@
     public interface ITeamService
     {
         IEnumerable<UserViewModel> TeamList();
+
+        IEnumerable<UserStatisticViewModel> UserStatistics();
 
         IEnumerable<EventViewModel> AllEvents();
 

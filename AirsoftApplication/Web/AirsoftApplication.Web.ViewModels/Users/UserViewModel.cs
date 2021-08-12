@@ -2,9 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using AirsoftApplication.Web.ViewModels.Administration.Contacts;
     using AirsoftApplication.Web.ViewModels.Guns;
-    using AirsoftApplication.Web.ViewModels.Images;
 
     public class UserViewModel
     {
@@ -23,7 +21,5 @@
         public IEnumerable<GunViewModel> Guns { get; set; }
 
         public InputGunViewModel Input { get; set; }
-
-        public IEnumerable<MessageViewModel> Messages { get; set; }
     }
 }

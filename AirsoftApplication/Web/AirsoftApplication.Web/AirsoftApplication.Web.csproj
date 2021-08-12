@@ -39,7 +39,6 @@
     <ProjectReference Include="..\..\Services\AirsoftApplication.Services.Data\AirsoftApplication.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\AirsoftApplication.Services.Mapping\AirsoftApplication.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\AirsoftApplication.Services.Messaging\AirsoftApplication.Services.Messaging.csproj" />
-    <ProjectReference Include="..\..\Services\AirsoftApplication.Services\AirsoftApplication.Services.csproj" />
     <ProjectReference Include="..\AirsoftApplication.Web.Infrastructure\AirsoftApplication.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\AirsoftApplication.Web.ViewModels\AirsoftApplication.Web.ViewModels.csproj" />
   </ItemGroup>

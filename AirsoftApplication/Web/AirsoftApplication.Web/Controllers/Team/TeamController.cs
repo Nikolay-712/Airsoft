@@ -12,6 +12,11 @@
             this.teamService = teamService;
         }
 
+        public IActionResult About()
+        {
+            return this.View();
+        }
+
         public IActionResult Index()
         {
             var players = this.teamService.TeamList();

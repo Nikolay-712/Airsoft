@@ -11,6 +11,7 @@
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Services.Data.Images;
     using AirsoftApplication.Services.Data.Roles;
+    using AirsoftApplication.Services.Data.Statistics;
     using AirsoftApplication.Web.ViewModels.Administration.Users;
     using AirsoftApplication.Web.ViewModels.Guns;
     using AirsoftApplication.Web.ViewModels.Images;
@@ -44,7 +45,10 @@
         {
             var users = this.memoryCache.Get<IEnumerable<UserViewModel>>(GlobalConstants.UsersCacheKey);
 
-            users = this.userRepository.All()
+            if (users == null)
+            {
+                users = this.userRepository.All()
+               .Where(x => x.PlayerName != "Admin")
                .Select(user => new UserViewModel
                {
                    UserId = user.Id,
@@ -60,12 +64,13 @@
                    }),
                }).ToList();
 
-            this.UserRolesToString(users);
+                this.UserRolesToString(users);
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                   .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+                var cacheOptions = new MemoryCacheEntryOptions()
+                       .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-            this.memoryCache.Set(GlobalConstants.UsersCacheKey, users, cacheOptions);
+                this.memoryCache.Set(GlobalConstants.UsersCacheKey, users, cacheOptions);
+            }
 
             return users;
         }

@@ -58,12 +58,12 @@
 
         public IActionResult MessageById(string messageId)
         {
-            if (messageId == null)
-            {
-                return this.Redirect("AllMessages");
-            }
-
             var message = this.contactService.MessageById(messageId);
+
+            if (message == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View(message);
         }

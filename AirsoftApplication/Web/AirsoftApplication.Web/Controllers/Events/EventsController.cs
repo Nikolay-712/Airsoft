@@ -30,12 +30,17 @@
 
         public IActionResult EventDetails(string eventId, int page = 1)
         {
-            if (page <= 0)
+            var gameEvent = this.eventService.EventDetails(eventId);
+
+            if (gameEvent == null)
             {
                 return this.NotFound();
             }
 
-            var gameEvent = this.eventService.EventDetails(eventId);
+            if (page <= 0)
+            {
+                return this.NotFound();
+            }
 
             gameEvent.PageNumber = page;
             gameEvent.ItemsCount = gameEvent.CommentsCount;
