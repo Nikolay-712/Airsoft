@@ -1,9 +1,9 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Statistics.StatisticViewModel
-@inject AirsoftApplication.Services.Data.Events.IEventService eventService
+@inject AirsoftApplication.Services.Data.Statistics.IStatisticService service
 
 @{
     ViewData["Title"] = "Event Control";
-    var gameEvent = this.eventService.UpcomingEvent();
+    var IsUpcomming = this.service.IsUpcoming();
 }
 
 <div class="header bg-primary pb-6">
@@ -31,7 +31,7 @@
 </div>
 
 
-@if (gameEvent != null)
+@if (IsUpcomming)
 {
     <div class="container-fluid mt--6">
         <div class="row">

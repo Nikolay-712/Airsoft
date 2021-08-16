@@ -1,12 +1,104 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Users.UserViewModel
 @using AirsoftApplication.Data.Models.Guns
+@using AirsoftApplication.Common
 
 
 <h4><a asp-controller="Home" asp-action="Index" class="link-primary">Home</a>/Profile</h4>
 @{
     ViewData["Title"] = "Player profile";
 }
-<br />
 
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <div class="userProfileInfo">
+                @if (Model.ProfileImageUrl == null)
+                {
+                    <div class="image text-center">
+                        <img src="~/Images/default-avatar.png" alt="#" class="img-responsive">
+                        <a asp-controller="Players" asp-action="UploadProfileImage" title="#" class="editImage">
+                            <i class="fa fa-camera"></i>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="image text-center">
+                        <img src="@Model.ProfileImageUrl" alt="#" class="img-responsive">
+                        <a asp-controller="Players" asp-action="UploadProfileImage" title="#" class="editImage">
+                            <i class="fa fa-camera"></i>
+                        </a>
+                    </div>
+                }
+                <br />
+                <div class="box">
+                    <div class="name"><strong>@Model.PlayerName</strong></div>
+                    <div class="info">
 
-   
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-8 col-lg-9">
+            <div class="box">
+                <h2 class="boxTitle">Personal information</h2>
+                <br />
+                <div class="classic-tabs border rounded px-4 pt-1">
+                    <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active show" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Add Guns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" role="tab" aria-selected="false">Account</a>
+                        </li>
+                    </ul>
+                    <hr />
+                    <div class="tab-content" id="advancedTabContent">
+                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                            <h5>@Model.AllUserRoles</h5>
+                            <p class="small text-muted text-uppercase mb-2">@Model.CreatedOn</p>
+                            @if (Model.AllUserRoles.Contains(GlobalConstants.ApplicationRole.CaptainRoleName) ||
+                          Model.AllUserRoles.Contains(GlobalConstants.ApplicationRole.SoldierRoleName))
+                            {
+                                <strong>@GlobalConstants.Team.Name</strong>
+                            }
+
+                            <p class="pt-1">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Gun Type</th>
+                                            <th scope="col">Manufacture</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Guns.Count(); i++)
+                                        {
+                                            <tr>
+                                                <th scope="row">@i</th>
+                                                <td>@Model.Guns[i].GunType</td>
+                                                <td>@Model.Guns[i].Manufacture</td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
+
+                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            <partial name="_AddGunPartial" model="@Model.Input" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

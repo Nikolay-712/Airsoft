@@ -1,7 +1,6 @@
 ﻿namespace AirsoftApplication.Services.Data.Statistics
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using AirsoftApplication.Common;
@@ -11,7 +10,6 @@
     using AirsoftApplication.Data.Models.Users;
     using AirsoftApplication.Services.Data.Team;
     using AirsoftApplication.Web.ViewModels.Administration.Dashboard;
-    using AirsoftApplication.Web.ViewModels.Administration.Users;
     using Microsoft.Extensions.Caching.Memory;
 
     public class AdministrationService : IAdministrationServive
@@ -41,21 +39,28 @@
             var statistic = this.memoryCache
                 .Get<AdministrationStatisticViewModel>(GlobalConstants.AdministrationCacheKey);
 
+            var teamList = this.teamService.TeamList();
+
             if (statistic == null)
             {
                 statistic = new AdministrationStatisticViewModel
                 {
-                    RegisteredUsers = this.users.All().ToList().Count(),
-                    OrganizedEvents = this.events.All().ToList().Count(),
-                    UsersInTeamRole = this.users.All()
-                  .Where(x => x.Roles.Count > 0)
-                  .Count(),
+                    RegisteredUsers = this.users.All()
+                        .ToList()
+                        .Count(),
+                    OrganizedEvents = this.events.All()
+                        .ToList()
+                        .Count(),
+                    UsersInTeamRole = this.teamService
+                        .TeamList()
+                        .Count(),
                     UnreadMessages = this.messges.All()
-                  .Where(x => x.HasBeenRead == false)
-                  .ToList().Count(),
+                        .Where(x => x.HasBeenRead == false)
+                        .ToList()
+                        .Count(),
                     Events = this.teamService.MostRatedEvents()
-                  .OrderByDescending(x => x.Vote.PositiveVotes)
-                  .Take(3),
+                        .OrderByDescending(x => x.Vote.PositiveVotes)
+                        .Take(3),
                 };
 
                 var cacheOptions = new MemoryCacheEntryOptions()
@@ -65,12 +70,6 @@
             }
 
             return statistic;
-        }
-
-        public IEnumerable<UserStatisticViewModel> GetPlayerStatistics()
-        {
-            var userStatistics = this.teamService.UserStatistics();
-            return userStatistics;
         }
     }
 }

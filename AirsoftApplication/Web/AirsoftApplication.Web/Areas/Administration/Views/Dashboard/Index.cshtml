@@ -1,9 +1,4 @@
 ﻿@model AirsoftApplication.Web.ViewModels.Administration.Dashboard.AdministrationStatisticViewModel
-@inject AirsoftApplication.Services.Data.Statistics.IAdministrationServive service
-
-@{
-    var statistics = service.GetPlayerStatistics();
-}
 
 <div class="header bg-primary pb-6">
     <div class="container-fluid">
@@ -127,7 +122,6 @@
                     </tr>
                 </thead>
                 <tbody class="list">
-
                     @foreach (var gameEvent in Model.Events)
                     {
                         <tr>
@@ -193,20 +187,20 @@
                             <tr>
                                 <th scope="col" class="sort" data-sort="image">Image</th>
                                 <th scope="col" class="sort" data-sort="name">Name</th>
-                                <th scope="col" class="sort" data-sort="events">Visited Events</th>
+                                <th scope="col" class="sort" data-sort="role">Role</th>
                                 <th scope="col" class="sort" data-sort="events">Information</th>
                             </tr>
                         </thead>
                         <tbody class="list">
-                            @foreach (var user in statistics)
+                            @foreach (var player in Model.TeamPlayers)
                             {
                                 <tr>
-                                    @if (user.ProfileImageUrl != null)
+                                    @if (player.ProfileImageUrl != null)
                                     {
                                         <th scope="row">
                                             <div class="media align-items-center border-radius: 50">
                                                 <a class="avatar rounded-circle mr-4">
-                                                    <img alt="Image placeholder" src="@user.ProfileImageUrl" width="30" height="50">
+                                                    <img alt="Image placeholder" src="@player.ProfileImageUrl" width="30" height="50">
                                                 </a>
                                             </div>
                                         </th>
@@ -221,28 +215,23 @@
                                             </div>
                                         </th>
                                     }
-
-                                    <td scope="row">
+                                    <th scope="row">
                                         <div class="media align-items-center">
                                             <div class="media-body">
-                                                <span class="name mb-0 text-sm">@user.Username</span>
+                                                <span class="name mb-0 text-sm">@player.PlayerName</span>
                                             </div>
                                         </div>
-                                    </td>
-
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm">@player.AllUserRoles</span>
+                                            </div>
+                                        </div>
+                                    </th>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <span class="completion mr-2">@user.StatisticInfos.Count()</span>
-                                            <div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: @user.StatisticInfos.Count()%;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td scope="row">
-                                        <div class="media align-items-center">
-                                            <a asp-action="ShowStatisticInfo" asp-controller="Statistics" asp-route-userId="@user.UserId">
+                                            <a asp-action="PlayerStatistics" asp-controller="Users" asp-route-playerId="@player.UserId">
                                                 <i class="fas fa-info-circle fa-2x"></i>
                                             </a>
                                         </div>
@@ -251,6 +240,7 @@
                             }
                         </tbody>
                     </table>
+                   <partial name="_PagingPartial" model="@Model" />
                 </div>
             </div>
         </div>

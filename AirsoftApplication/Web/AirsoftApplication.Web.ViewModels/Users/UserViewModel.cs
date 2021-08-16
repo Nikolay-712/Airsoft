@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using AirsoftApplication.Web.ViewModels.Administration.Statistics;
     using AirsoftApplication.Web.ViewModels.Guns;
 
     public class UserViewModel
@@ -18,7 +19,7 @@
 
         public string AllUserRoles { get; set; }
 
-        public IEnumerable<GunViewModel> Guns { get; set; }
+        public List<GunViewModel> Guns { get; set; }
 
         public InputGunViewModel Input { get; set; }
     }

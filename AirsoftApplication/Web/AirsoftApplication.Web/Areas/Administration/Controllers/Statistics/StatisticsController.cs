@@ -20,6 +20,11 @@
 
         public IActionResult ScanBarCode()
         {
+            if (!this.statisticService.IsUpcoming())
+            {
+                return this.View("Index");
+            }
+
             var userId = this.barcodeService.ReadingBarCode("29011e3c-99d8-404e-9bd8-54c9df73a00f");
 
             if (userId == string.Empty)
@@ -48,19 +53,6 @@
             await this.statisticService.CreateStatisticAsync(model);
 
             return this.RedirectToAction("ScanBarCode");
-        }
-
-        public IActionResult ShowStatisticInfo(string userId)
-        {
-            var playerStatistic = this.statisticService
-                .GetUserStatistic(userId);
-
-            if (playerStatistic == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(playerStatistic);
         }
     }
 }

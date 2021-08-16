@@ -11,6 +11,8 @@
 
         Task CreateStatisticAsync(StatisticViewModel model);
 
-        IEnumerable<StatisticInfoViewModel> GetUserStatistic(string userId);
+        IEnumerable<PlayerStatisticViewModel> GetPlayerStatistics(string userId);
+
+        bool IsUpcoming();
     }
 }

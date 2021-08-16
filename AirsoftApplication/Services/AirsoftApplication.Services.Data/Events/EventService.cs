@@ -102,7 +102,6 @@
         public EventViewModel UpcomingEvent()
         {
             var gameEvent = this.AllEvents()
-                .OrderBy(x => x.Date)
                 .FirstOrDefault(x => DateTime
                 .ParseExact(x.Date, GlobalConstants.DateTimeFormat.DateFormat, CultureInfo.InvariantCulture) > DateTime.UtcNow);
 
@@ -115,7 +114,7 @@
 
             if (events == null)
             {
-                events = this.eventRepository.All().Select(x => new EventViewModel
+                events = this.eventRepository.All().OrderBy(x => x.Date).Select(x => new EventViewModel
                 {
                     Id = x.Id,
                     Images = this.imageService.GetAllImages(x.Id),

@@ -42,24 +42,6 @@
             return statistic;
         }
 
-        public IEnumerable<StatisticInfoViewModel> GetUserStatistic(string userId)
-        {
-            var userStatistic = this.statisticyRepository.All()
-                .Where(x => x.UserId == userId)
-                .Select(s => new StatisticInfoViewModel
-                {
-                    EventName = s.Event.Name,
-                    Date = s.Event.Date.ToString(GlobalConstants.DateTimeFormat.DateFormat),
-                    Info = s.Info.Select(i => new InfoViewModel
-                    {
-                        Gun = i.Gun.GunType.ToString() + " - " + i.Gun.Manufacture,
-                        GunEnergy = i.GunEnergy,
-                    }),
-                }).ToList();
-
-            return userStatistic;
-        }
-
         public async Task CreateStatisticAsync(StatisticViewModel model)
         {
             var gameevent = this.eventService.UpcomingEvent();
@@ -96,6 +78,41 @@
 
             await this.infoRepository.AddAsync(statisticInfo);
             await this.infoRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<PlayerStatisticViewModel> GetPlayerStatistics(string userId)
+        {
+            var statistics = this.statisticyRepository.All()
+            .Where(x => x.UserId == userId)
+            .Select(x => new PlayerStatisticViewModel
+            {
+                UserId = x.UserId,
+                EventId = x.EventId,
+                EventName = x.Event.Name,
+                Date = x.Event.Date
+                     .ToString(GlobalConstants.DateTimeFormat.DateFormat),
+                GunInfo = x.Info
+                .Select(gunInfo => new GunInfoStatisticViewModel
+                {
+                    GunId = gunInfo.GunId,
+                    Energy = gunInfo.GunEnergy,
+                    Gun = gunInfo.Gun.GunType.ToString() + " - " + gunInfo.Gun.Manufacture,
+                }),
+            }).ToList();
+
+            return statistics;
+        }
+
+        public bool IsUpcoming()
+        {
+            var gameEvent = this.eventService.UpcomingEvent();
+
+            if (gameEvent != null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

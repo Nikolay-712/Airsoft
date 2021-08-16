@@ -35,7 +35,8 @@
                 using (var memoryStream = new MemoryStream())
                 {
                     await file.CopyToAsync(memoryStream);
-                    var imageObject = await this.storageClient.UploadObjectAsync(this.bucketName, file.FileName, null, memoryStream);
+                    var fileName = file.FileName + guidingId;
+                    var imageObject = await this.storageClient.UploadObjectAsync(this.bucketName, fileName, null, memoryStream);
 
                     var image = new Image()
                     {

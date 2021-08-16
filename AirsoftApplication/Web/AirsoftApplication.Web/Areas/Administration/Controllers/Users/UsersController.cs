@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using AirsoftApplication.Services.Data.Roles;
+    using AirsoftApplication.Services.Data.Statistics;
     using AirsoftApplication.Services.Data.Users;
     using AirsoftApplication.Web.ViewModels.Administration.Users;
     using AirsoftApplication.Web.ViewModels.Users;
@@ -11,15 +12,20 @@
 
     public class UsersController : AdministrationController
     {
-        private const int UsersPerPage = 10;
+        private const int UsersPerPage = 7;
 
         private readonly IUserService userService;
         private readonly IRoleService roleService;
+        private readonly IStatisticService statisticService;
 
-        public UsersController(IUserService userService, IRoleService roleService)
+        public UsersController(
+            IUserService userService,
+            IRoleService roleService,
+            IStatisticService statisticService)
         {
             this.userService = userService;
             this.roleService = roleService;
+            this.statisticService = statisticService;
         }
 
         public IActionResult AllPlayers(int page = 1)
@@ -41,7 +47,7 @@
                     .Take(UsersPerPage),
             };
 
-            if (page > allPlayers.PagesCount)
+            if (page > allPlayers.PagesCount && players.Count() > 0)
             {
                 return this.NotFound();
             }
@@ -49,6 +55,13 @@
             string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
             this.ViewData["Actionname"] = actionName;
             return this.View(allPlayers);
+        }
+
+        public IActionResult PlayerStatistics(string playerId)
+        {
+            var statistics = this.statisticService.GetPlayerStatistics(playerId);
+
+            return this.View(statistics);
         }
 
         public IActionResult SetPlayerRole(string userId)

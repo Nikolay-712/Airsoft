@@ -8,7 +8,5 @@
     public interface IAdministrationServive
     {
         AdministrationStatisticViewModel GetStatistic();
-
-        IEnumerable<UserStatisticViewModel> GetPlayerStatistics();
     }
 }

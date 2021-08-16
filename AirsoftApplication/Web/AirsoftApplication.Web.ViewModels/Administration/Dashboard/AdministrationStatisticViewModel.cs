@@ -3,8 +3,9 @@
     using System.Collections.Generic;
 
     using AirsoftApplication.Web.ViewModels.Events;
+    using AirsoftApplication.Web.ViewModels.Users;
 
-    public class AdministrationStatisticViewModel
+    public class AdministrationStatisticViewModel : PagingViewModel
     {
         public int RegisteredUsers { get; set; }
 
@@ -15,5 +16,7 @@
         public int UsersInTeamRole { get; set; }
 
         public IEnumerable<MostRatedEventViewModel> Events { get; set; }
+
+        public IEnumerable<UserViewModel> TeamPlayers { get; set; }
     }
 }

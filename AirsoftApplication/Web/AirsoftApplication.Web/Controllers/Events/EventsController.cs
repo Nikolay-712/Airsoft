@@ -7,7 +7,7 @@
 
     public class EventsController : Controller
     {
-        private const int CommentsPerPage = 2;
+        private const int CommentsPerPage = 3;
 
         private readonly IEventService eventService;
 
@@ -48,7 +48,7 @@
             gameEvent.Comments = gameEvent.Comments.Skip((page - 1) * CommentsPerPage)
                       .Take(CommentsPerPage);
 
-            if (page > gameEvent.PagesCount)
+            if (page > gameEvent.PagesCount && gameEvent.CommentsCount > 0)
             {
                 return this.NotFound();
             }
