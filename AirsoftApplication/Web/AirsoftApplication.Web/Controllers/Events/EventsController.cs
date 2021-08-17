@@ -7,7 +7,7 @@
 
     public class EventsController : Controller
     {
-        private const int CommentsPerPage = 3;
+        private const int CommentsPerPage = 2;
 
         private readonly IEventService eventService;
 

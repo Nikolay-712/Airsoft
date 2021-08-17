@@ -20,19 +20,30 @@
 
         public IActionResult ScanBarCode()
         {
+            return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult ScanBarCode(ScanerViewModel scaner)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
             if (!this.statisticService.IsUpcoming())
             {
                 return this.View("Index");
             }
 
-            var userId = this.barcodeService.ReadingBarCode("29011e3c-99d8-404e-9bd8-54c9df73a00f");
+            var user = this.barcodeService.ReadingBarCode(scaner.UserId);
 
-            if (userId == string.Empty)
+            if (user == string.Empty)
             {
                 return this.View("ScanBarCodeError");
             }
 
-            return this.RedirectToAction("Index", new { userId = userId });
+            return this.RedirectToAction("Index", new { userId = user });
         }
 
         public IActionResult Index(string userId)
